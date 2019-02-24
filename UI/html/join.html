@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Questioner | Join MeetUp</title>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+    <meta name="viewport" content="width=device-width">
+		</head>
+<body>
+	<header>
+		    <div class="container">
+             
+             <div id=branding>
+             	<h1><span class="highlight">Quest</span> Meetup</h1>
+             </div> 
+             <nav>
+             	<ul>
+             		<li><a href="index.html">Home</a></li>
+                    <li><a href="create.html">Create</a></li>
+                    <li class><a href="profile.html">User</a></li>
+                    <li><a href="sign.html">SignUp</a></li>
+                    <li><a href="login.html">Login</a></li>
+
+             	</ul>           	
+             </nav>
+		    </div>
+
+		    
+		   
+	</header> 
+
+	
+
+	<section id="main">
+		<div class="container">
+			<div class="" ="join"><br>
+				<div id="first">
+				<h1>Join the meetup</h1>
+               <img src="../img/youthSpeak.jpg" height="290" width="400"><br>
+               <p>Youth Speak Forum is an event organized by AIESEC<br> 
+               that takes place once ayear in multiple locations<br> 
+               around the world, The aim is to generate actionable<br>
+               ideas and initiatives to be taken forward to impact the world</p>
+               <div><button type="submit" class="button_1">+ Add me</button>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<button id="like" onclick="like()"></button><b id="like_nber">0</b><button id="dislike" onclick="dislike()"></button><b id="dislike_nber">0</b></div>
+               <div><span class="comment"><b>Comment:</b></span>
+               	<textarea placeholder="give a comment or ask a question" cols="33px" rows="1px"></textarea>
+                </div><br>
+                <div><button class="deletebutton">Delete</button>
+            </div>
+               <br>
+                 <div id="second">
+				<h1>Join the meetup</h1>
+               <img src="../img/youthSpeak.jpg" height="290" width="400"><br>
+               <p>Youth Speak Forum is an event organized by AIESEC<br> 
+               that takes place once ayear in multiple locations<br> 
+               around the world, The aim is to generate actionable<br>
+               ideas and initiatives to be taken forward to impact the world</p>
+               <div><button type="submit" class="button_1">+ Add me</button>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<button id="like" onclick="like()"></button><b id="like_nber">0</b><button id="dislike" onclick="dislike()"></button><b id="dislike_nber">0</b></div>
+               <div><span class="comment"><b>Comment:</b></span>
+               	<textarea placeholder="give a comment or ask a question" cols="33px" rows="1px"></textarea>
+               </div><br>
+               <div><button class="deletebutton">Delete</button>
+           </div>
+			</div>
+
+
+		</div>
+
+
+	</section>
+	<footer class="footer">
+		<p>EPIC Mail, Copyright &copy; 2019</p>
+	</footer>
+ <script type="text/javascript">
+ 	console.log("ok");
+ 	var likes=0;
+ 	function like() {
+ 		likes++;
+ 		like_nber.innerHTML=likes;
+ 	}
+ 	var dislikes=0;
+ 	function dislike() {
+ 		dislikes++;
+ 		dislike_nber.innerHTML=dislikes;
+ 	}
+ </script>
+</body>
+</html>
