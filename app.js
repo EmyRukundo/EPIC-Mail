@@ -10,8 +10,6 @@ app.use(express.json());
 
 app.use('/api/v1/auth/',userRouter);
 
-
-
 app.get('/api',(req,res)=>{
 res.status(202).send('Welcome to the EPIC Mail web app');
 });
