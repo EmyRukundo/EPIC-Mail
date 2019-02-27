@@ -19,31 +19,35 @@ chai.use(chaiHttp);
     });
   });
 
-  // login test
-//   describe('/POST /api/v1/users', () => {
-//     it('Should log into user account', () => {
-//       chai.request(app).post('/api/users/login').send({ username: 'mwibutsa', password: 'UnencryptedPassword' }).end((err, res) => {
-//         res.should.have.status(200);
-//       });
-//     });
-//   });
-//   describe('/POST /api/v1/users/new-account', () => {
-//     it('Should create a new user', () => {
-//       const userAccount = {
-//         firstname: 'Twizere',
-//         lastname: 'Aime',
-//         othername: 'Pacifique',
-//         email: 'tuipac@gmail.com',
-//         username: 'tuipac',
-//         password: 'UnencryptedPassword',
-//         cpassword: 'UnencryptedPassword',
-//       };
-//       chai.request(app).post('/api/users/new-account').send(userAccount).end((err, res) => {
-//         try {
-//           res.should.have.status(200);
-//         } catch (error) {
-//           throw error;
-//         }
-//       });
-//     });
-//   });
+  //login test
+
+  describe('TESTING USER LOGIN', () => {
+    it('Should login into user account', () => {
+      chai.request(app).post('/api/v1/auth/login').send({
+           email: 'Emmanuel', password: 'Rukundo' }).end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+      });
+    });
+  });
+
+
+  describe('CAN CREATE A NEW ACCOUNT', () => {
+    it('Should create a new user', () => {
+      const userAccount = {
+        id:1,
+        email:'rukundoemma@gmail.com',
+        firstname:'Emmanuel',
+        lastname:'Rukundo',
+        password:'success'
+      };
+      chai.request(app).post('/api/v1/auth/signup').send(userAccount).end((err, res) => {
+        try {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+        } catch (error) {
+          throw error;
+        }
+      });
+    });
+  });
