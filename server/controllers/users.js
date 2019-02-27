@@ -13,10 +13,7 @@ const users =[{
 	firstname:'Eric',
 	lastname:'mugume',
 	password:'pass2019'
-}
-
-
-]
+}]
 
 
 const getUsers= (req,res)=>{
