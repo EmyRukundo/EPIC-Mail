@@ -18,7 +18,7 @@ app.use('/api/v1/',deleteRouter);
 
 app.get('/api',(req,res)=>{
 
-                      res.status(202).send('Welcome to the EPIC Mail web app');
+	res.status(202).send('Welcome to the EPIC Mail web app');
 });
 
 app.get((err,req,res,next) => {
