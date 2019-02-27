@@ -4,7 +4,7 @@
   "description": "web app for exchange messaging through internet",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha ./server/test/*.js --require babel-register  --exit",
     "dev": "nodemon --require babel-core/register --require babel-polyfill app.js"
   },
   "repository": {
@@ -29,6 +29,13 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
-    "babel-register": "^6.26.0"
+    "babel-register": "^6.26.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "http": "0.0.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^6.0.2",
+    "nyc": "^13.3.0",
+    "should": "^13.2.3"
   }
 }
