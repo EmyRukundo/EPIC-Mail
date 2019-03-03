@@ -15,12 +15,11 @@
              </div><p onclick="m()" id="men"><a href="#">Menu</a></p>
              <nav id="nv">
              	<ul>
-             		<li class="current"><a href="index.html">Home</a></li>
-                    <li><a href="create.html">Create</a></li>
-                    <li><a href="profile.html">User</a></li>
-                    <li><a href="sign.html">SignUp</a></li>
-                    <li><a href="login.html">Login</a></li>
-         
+                  <li><a href="home.html">Home</a></li>
+             		<li class="current"><a href="compose.html">Email</a></li>
+                    <li><a href="createGroup.html">Create Group</a></li>
+                    <li><a href="index.html">Log Out</a></li>
+                         
              	</ul>         	
              </nav>
 		    </div>
@@ -36,12 +35,12 @@
   <div class="container">
     
     <p></p>
-    <hr>
-    <label for="email"><b>From</b></label>
-    <input type="text" placeholder="Enter Email" name="email" required>
-
+    
     <label for="email"><b>To</b></label>
     <input type="text" placeholder="Enter Email" name="email" required>
+
+    <label for="email"><b>Cc</b></label>
+    <input type="text" placeholder="Enter Email" name="ccEmail" required>
 
     <label for="psw"><b>Subject</b></label>
     <input type="text" placeholder="Subject" name="psw" required>
@@ -49,14 +48,18 @@
     <label><b>Message</b></label><br>
     <textarea name="subject" rows="4" cols="55" placeholder="write your message...."></textarea>
 
-        
-
     <div class="clearfix">
      
-      <button type="submit" class="signupbtn">Send</button>
-      <button type="submit" class="cancelbtn"><b>Save as draft</b></button>
-      <button type="reset" class="cancelbtn"><b>Reset</b></button>
       
+      <button type="submit" class="cancelbtn"><b>Save as draft</b></button>
+      <button type="submit" class="signupbtn">Send</button>
+      <!-- <button type="reset" class="cancelbtn"><b>Reset</b></button> -->
+      <!-- <button>
+        <select type="submit" name="save" class="signupbtn">
+          <option value="sent">Send</option>
+          <option value="Draft">Draft</option>
+        </select>
+      </button> -->
       
     </div>
   </div>
@@ -69,15 +72,11 @@
 				<p> emails have grown to become the primary medium exchanging information over the internet between two or more people, until the advent of Instant Messaging (IM) Apps.</p>
             </div>
             <div>
-                <a href="compose.html">~Email</a>&nbsp; &nbsp; &nbsp;
-                <a href="inbox.html">~Inbox</a>
+                <a href="compose.html">Sent Message</a>&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                <a href="inbox.html">unread Message</a>
             </div>
-
-            
-				
 			</aside>
 		
-
 	</section>
 	<footer class="footer">
 		<p>Epic Mail, Copyright &copy; 2019</p>
