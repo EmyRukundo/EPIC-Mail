@@ -3,11 +3,12 @@
 
  [![Build Status](https://travis-ci.org/EmyRukundo/EPIC-Mail.svg?branch=develop)](https://travis-ci.org/EmyRukundo/EPIC-Mail)  ![Coveralls github](https://img.shields.io/coveralls/github/EmyRukundo/EPIC-Mail.svg?style=popout)  [![Maintainability](https://api.codeclimate.com/v1/badges/430aae199b238ec60664/maintainability)](https://codeclimate.com/github/EmyRukundo/EPIC-Mail/maintainability)
 
-Some Important links of the App
-Github repo: https://github.com/EmyRukundo/EPIC-Mail
-UI pages: https://emyrukundo.github.io/EPIC-Mail/
-Pivot Track: https://www.pivotaltracker.com/n/projects/2314962
-Heroku :
+Some Important links of the App 
+
+     Github repo: https://github.com/EmyRukundo/EPIC-Mail
+     UI pages: https://emyrukundo.github.io/EPIC-Mail/
+     Pivot Track: https://www.pivotaltracker.com/n/projects/2314962
+     Heroku :
 
 
 Lists of API End points for EPIC-Mail
