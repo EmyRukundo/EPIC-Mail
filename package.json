@@ -4,7 +4,7 @@
   "description": "web app for exchange messaging through internet",
   "main": "app.js",
   "scripts": {
-    "start": "node --require babel-core/register --require babel-polyfill ./app.js",
+    "start": "babel-node ./app.js",
     "test": " nyc mocha ./server/test/*.js --require babel-register  --exit",
     "heroku-postbuild": "npm install",
     "dev": "nodemon --require babel-core/register --require babel-polyfill app.js",
