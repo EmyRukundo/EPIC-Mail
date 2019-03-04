@@ -8,7 +8,7 @@ Some Important links of the App
      Github repo: https://github.com/EmyRukundo/EPIC-Mail
      UI pages: https://emyrukundo.github.io/EPIC-Mail/
      Pivot Track: https://www.pivotaltracker.com/n/projects/2314962
-     Heroku :
+     Heroku : https://arcane-shelf-53833.herokuapp.com/api/
 
 
 Lists of API End points for EPIC-Mail
