@@ -4,17 +4,17 @@ const email =[{
     createdOn:'26/02/2019​',
     subject:'greetings',
     message:'How is everything going brother',
-    senderId:2, receiverId:2, 
-    parentMessageId:2,
-     status:'sent'
-},{
-    id:2,
-    createdOn:'26/02/2019​',
-    subject:'greetings',
-    message:'How is everything going brother',
-    senderId:1,receiverId:1,
+    senderId:1, receiverId:1, 
     parentMessageId:1,
      status:'unread'
+},{
+    id:2,
+    createdOn:'08/03/2019​',
+    subject:'Andela Fellowship',
+    message:'Andela Kigali Bootcamp cycle Four',
+    senderId:2,receiverId:2,
+    parentMessageId:2,
+     status:'sent'
  }]
 
  const getMessages= (req,res)=>{

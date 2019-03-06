@@ -16,9 +16,14 @@ app.use('/api/v1/',messageRouter);
 
 app.use('/api/v1/',deleteRouter);
 
-app.get('/api',(req,res)=>{
+app.get('/',(req,res)=>{
 
 	res.status(202).send('Welcome to the EPIC Mail web app');
+});
+
+app.get('/*',(req,res)=>{
+
+	res.status(404).send('This is not the page you are looking for');
 });
 
 app.get((err,req,res,next) => {
