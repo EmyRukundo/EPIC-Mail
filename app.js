@@ -1,12 +1,12 @@
 import express from 'express';
 const app = express();
-import bodyParser from 'body-parser';
+
 
 import userRouter from './server/routes/user';
 import messageRouter from './server/routes/message';
 import specificRouter from './server/routes/specificEmail';
 import deleteRouter from './server/routes/deleteMessage';
-import session from 'express-session';
+
 
 app.use(express.json());
 
@@ -32,7 +32,7 @@ app.get((err,req,res,next) => {
 });
 
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 app.listen(port, ()=> console.log(`Listening on port ${port}...`));
 
 export default app;
