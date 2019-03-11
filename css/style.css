@@ -122,7 +122,28 @@ header .avatar {
 
     }
     .inbox table,th,td{
-      border: 1px solid rgb(68, 53, 53);
+      border: 1px dotted rgb(68, 53, 53);
+    }
+
+    /* view groups*/
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: auto auto auto;
+      grid-template-rows: auto auto auto;
+      grid-gap: 1px;
+      padding: 1px;
+      
+      
+    }
+    
+    .grid-container > div {
+      
+      text-align: center;
+      padding: 3px ;
+      font-weight: 900;
+      width: 100%
+      
     }
 
 
@@ -159,7 +180,12 @@ header .avatar {
   aside#sidebar{
     float:right;
     width:30%;
-    margin-top:100px;
+    margin-top:80px;
+  }
+  aside#sidebari{
+    float:right;
+    width:30%;
+    margin-top:10px;
   }
   
   /*Main-col */
@@ -292,6 +318,12 @@ button:hover {
 .cancelbtn {
   padding: 14px 20px;
   background-color: yellowgreen;
+}
+.sidebtn {
+  padding: 14px 20px;
+  background-color: yellowgreen;
+  font-size: 120%;
+  font-weight: 1000;
 }
 
 /* Float cancel and signup buttons and add an equal width */

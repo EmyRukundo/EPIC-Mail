@@ -16,9 +16,9 @@
              </div><p onclick="m()" id="men"><a href="#">Menu</a></p>
              <nav id="nv">
              	<ul>
-                  <li><a href="home.html">Home</a></li>
+                  <!-- <li><a href="home.html">Home</a></li> -->
              		<li class="current"><a href="compose.html">Email</a></li>
-                    <li><a href="createGroup.html">Create Group</a></li>
+                    <!-- <li><a href="createGroup.html">Create Group</a></li> -->
                     <li><a href="index.html">Log Out</a></li>
                          
              	</ul>         	
@@ -47,15 +47,13 @@
     <input type="text" placeholder="Subject" name="psw" required>
 
     <label><b>Message</b></label><br>
-    <textarea name="subject" rows="4" cols="55" placeholder="write your message...."></textarea>
+    <textarea name="subject" rows="4" cols="67" placeholder="write your message...."></textarea>
 
     <div class="clearfix">
-     
-      
+  
       <button type="submit" class="cancelbtn"><b>Save as draft</b></button>
       <button type="submit" class="signupbtn">Send</button>
-     
-      
+
     </div>
   </div>
 </form>
@@ -63,13 +61,33 @@
           
 			<aside id="sidebar">
 				<div class="dark">
-				<h3>What we do</h3>
-				<p> emails have grown to become the primary medium exchanging information over the internet between two or more people, until the advent of Instant Messaging (IM) Apps.</p>
+          
+						<div class="clearfix">
+              	<button onclick="location.href='compose.html'" class="sidebtn">
+                    COMPOSE EMAIL</button> 
+                <button onclick="location.href='unreadMessage.html'" class="sidebtn">
+                    UNREADMESSAGE</button>  
+								<button onclick="location.href='inbox.html'" class="sidebtn">
+                    INBOX</button> 
+                    <button onclick="location.href='viewGroup.html'" class="sidebtn">
+                        VIEW GROUPS</button>
+                <button onclick="location.href='createGroup.html'" class="sidebtn">
+                        CREATE GROUP</button> 
+                <button onclick="location.href='sentMessage.html'" class="sidebtn">
+                            OUTBOX</button>
+                <button onclick="location.href='profile.html'" class="sidebtn">
+                                VIEW PROFILE</button>  
+               
+
+							</div>	
+
+				<!-- <h3>The App Info</h3>
+				<p> emails have grown to become the primary medium exchanging information over the internet between two or more people, until the advent of Instant Messaging (IM) Apps.</p> -->
             </div>
-            <div>
+            <!-- <div>
                 <a href="compose.html">Sent Message</a>&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
                 <a href="inbox.html">unread Message</a>
-            </div>
+            </div> -->
 			</aside>
 		
 	</section>
