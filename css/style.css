@@ -8,10 +8,9 @@ body{
 /* Global */
 .container{
   width: 80%;
+  height: 50%;
   margin:auto;
   overflow:hidden;
-  
-
 }
 a{
   text-decoration: none;
@@ -160,7 +159,7 @@ header .avatar {
   aside#sidebar{
     float:right;
     width:30%;
-    margin-top:10px;
+    margin-top:100px;
   }
   
   /*Main-col */
@@ -239,6 +238,7 @@ button:hover {
 }
 .container {
   padding: 16px;
+
 }
 .join #first #second{
   float: left;

@@ -29,35 +29,48 @@
 		   
 	</header> 
 
-
 	<section id="main">
-		<div class="container">
-			<div class="quote">
-				
-			<h1><center>Create a group</center></h1>
-			<form>
-				<div>
-					<label><b>Name of Group</b></label><br>
+			<div class="container">
+	
+				<article id="main-col">
 					
-					<textarea name="head" rows="1" cols="55" placeholder="Group Name"></textarea>
+					 
+	<center><h2>Create a Group</h2></center>
+	
+	<form>
+		<div class="container">
+			<label for="uname"><b>GroupName</b></label>
+			<input type="text" placeholder="add a group name" name="gname" required>
+	
+			<label for="psw"><b>Description</b></label>
+			<input type="text" placeholder="Enter details of the group" name="dname" required>
+
+			<label for="psw"><b>Users</b></label>
+			<input type="text" placeholder="Add users to the group" name="dname" required>
+					
+		
+			<div class="clearfix">
+				<button type="button" class="cancelbtn">Cancel</button>    
+				<button type="submit" class="signupbtn" href="index.html">Add Group</button>
+			</div>
+	
+		</div>
+		
+	</form>
+			
+				</article>
+	
+				<aside id="sidebar">
+					<div class="dark">
+					<h3>The App Info</h3>
+					<p> emails have grown to become the primary medium exchanging information over the internet between two or more people, until the advent of Instant Messaging (IM) Apps.   </p>
 				</div>
-				<div>
-					<label><b>Description</b></label><br>
-					<textarea name="subject" rows="4" cols="55" placeholder="type a purpose of the group"></textarea>
-				</div>
-				<div>
-					<label><b>Add Emails</b></label><br>
-					<textarea name="location" rows="1" cols="55" placeholder="add email of people to the group  "></textarea>
+				</aside>
 				</div>
 	
-				<input type="submit" name="" class="button_1" value="Create">
-				
-			</form>
 			
-		</div>
-	</div>
-	</section>
-	<footer class="footerInbox">
+		</section>
+	<footer class="footer">
 		<p>EPIC Mail, Copyright &copy; 2019</p>
 	</footer>
  <script type="text/javascript" src="js/javascript.js"></script>
