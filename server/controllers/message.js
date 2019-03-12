@@ -17,6 +17,22 @@ const email =[{
     senderId:2,receiverId:2,
     parentMessageId:2,
      status:'sent'
+ },{
+    id:3,
+    createdOn:'10/03/2019​',
+    subject:'Software development',
+    message:'Technical skills that require passion',
+    senderId:3,receiverId:3,
+    parentMessageId:3,
+     status:'sent'
+ },{
+    id:4,
+    createdOn:'11/03/2019​',
+    subject:'Kigali love',
+    message:'Try your best to be in kigali',
+    senderId:3,receiverId:3,
+    parentMessageId:3,
+     status:'unread'
  }]
 
  //@get all messges
@@ -66,10 +82,21 @@ const createMessage = (req, res) => {
 //@sentMessage
 
   const sentMessage = (req,res)=>{ 
-    const sentEmail = email.find(c => c.status === req.params.status);
-    if(!sentEmail) return res.status(400).send('NO any unread Email');
-    res.status(200).send({status:200,sentEmail});
-    };
+    const sentMail = [];
+    email.forEach((message) => {
+        if(message.status =="sent")
+        {
+         sentMail.push(message);
+
+        }
+    })
+        
+        if(!sentMail) return res.status(400).send('NO any unread Email');
+        
+        res.status(200).send({status:200, sentMail});
+        };
+
+
     
   //@unreadMessage
   
