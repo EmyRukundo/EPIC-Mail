@@ -70,7 +70,7 @@ describe('GET SENT MESSAGE',()=>{
       };
       chai.request(app).post('/api/v1/messages').send(newMessage).end((err, res) => {
         try {
-          // res.should.have.status(200);
+        
           res.body.should.be.a('object');
           
         } catch (error) {

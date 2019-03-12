@@ -16,6 +16,29 @@
     
     This is the link for Pivot Track: https://www.pivotaltracker.com/n/projects/2314962
 
+
+## Technologies Used
+
+    JavaScript - Programming Language
+
+    NodeJS - Server Environment
+
+    Mocha and Chai - Test Framework And Assertion Library
+
+    Travis-CI - Continuous Integration Testing
+
+    Coveralls - Continuous Integration Test Coverage
+
+    Code Climate - Continuous Integration Code Quality
+
+    Heroku - App Deployed on Heroku
+
+    GIT - Version Control System
+
+    GitHub Pages - Front-End UI Hosting is Hosted: https://emyrukundo.github.io/EPIC-Mail/ 
+
+
+
 ## Running the api Locally
 
     clone the repo or download the zip
@@ -25,16 +48,21 @@
     Run npm start from the terminal to start the app.
     With the ideal tool preferably postman, send requests to the endpoints descriped bellow.
 
-## Running the tests locally
 
-    clone the repo or downoald the zip file(extract the zip and navigate to the folder containing the app)
-    Install dependecies with npm install from the terminal
-    Run tests with npm test 
+## API ENDPOINT ROUTES
 
-    Information on the UI (I have not yet connected this UI to the backend for now)
-    The UI folder is at the root folder and  
-    That is where every UI related file is located link for UI and are on the gh-pages:
-     https://emyrukundo.github.io/EPIC-Mail/ 
+    | METHOD |	ROUTE              |	DESCRIPTION 
+             	
+    | POST    |	api/v1/auth/signup |    User Registration 	
+    | POST    |	api/v1/auth/login  |	User Login 	Public
+    | GET     | api/v1/auth/getUsers|  Retrieve all users
+    | POST    |	api/v1/messages    |    Send Email 	Private
+    | GET 	  | api/v1/messages    |	Retrieve Received Emails 	
+    | GET 	  | api/v1/messages    |    Retrieve A Specific Email 	
+    | DELETE  |	api/v1/messages    |	Delete A Specific Email 	
+    | GET 	  | api/v1/message/sent | 	Retrieve Sent Emails 	
+    | GET 	  | api/v1/message/unread |	Retrieve unRead Emails 	
+ 
 
 ## Information on the API
 
