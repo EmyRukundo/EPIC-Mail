@@ -17,13 +17,14 @@ const users =[{
 	lastname:'mugume',
 	password:'pass2019'
 }]
-
+//@ get all users
 
 const getUsers= (req,res)=>{
     res.send(users);
    if(!getUsers) res.status(400).send('the data was not found,Try again');
 };
 
+//@ create user
 
 const signUp = (req, res) => {
 
@@ -41,33 +42,17 @@ const signUp = (req, res) => {
         res.send(newUser);
     }).catch(error => res.status(400).json({
         status: 400,
-        error:`You have this error ${error}`,
+        error: error.details[0].message,
       }));
 };
 
-//login
+//@login
 
 
 const login =(req, res)=>{
 
-//     joi.validate(req.body, Validation.loginSchema, Validation.validationOption).then((result) => {
-   
-//     jwt.sign({users}, 'secretkey',(err,token)=>{
-//         res.status(200).json({
-//             token
-//         });
-//     });
 
-
-// }).catch(error => res.status(400).json({
-//     status: 400,
-//     error:`You have this error ${error}`,
-//   }));
-
-// };
-
-
-joi.validate(req.body, Validation.loginSchema, Validation.validationOption,
+ joi.validate(req.body, Validation.loginSchema, Validation.validationOption,
     (err, result) => {
      if (err) {
        return res.status(400).json({
@@ -82,25 +67,20 @@ joi.validate(req.body, Validation.loginSchema, Validation.validationOption,
     
      const userResult = users.find((user) => userAccount.email == user.email);
     
-    //  user.then((userResult) => {
+    
        if (userResult) {
        
          if (Helper.comparePassword(userAccount.password, userResult.password)) {
            
            jwt.sign({user: userResult.email }, 'secret',(err,token)=>{
                  if(err){
-                   console.log(err);
+                console.log(err);
                  }
-              res.status(200).send({ status: 200, data: userResult, token });
+              res.status(200).send({ status: 201, data: userResult, token });
            });
-         }else{
-            console.log(userAccount.password);
-            console.log(userAccount.password);
-         }
-       }
-       else {
+         }else {
          return res.status(403).json({ status: 403, error: 'wrong combination  username  or password' });
-       }
+       }}
      });
 
     };

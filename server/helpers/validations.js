@@ -9,12 +9,16 @@ const Validation = {
     password: joi.string().min(6).required(),
     
   }),
-//   messageSchema: joi.object().keys({
-//     subject: joi.string().required(),
-//     message: joi.string().required(),
-//     // parent_message_id: joi.string().required(),
-//     // ​status: joi.string().required()
-//   }),
+  messageSchema: joi.object().keys({
+    subject: joi.string().required(),
+    message: joi.string().trim().min(10).max(100),
+    senderId: joi.number().integer().required(),
+    receiverId: joi.number().integer().required(),
+    parent_message_id: joi.number().integer().required(),
+    // ​status: joi.string().required(),
+    status: joi.string().alphanum().valid("sent", "draft", "read")
+    .required(),
+  }),
 
 // //   groupSchema: joi.object().keys({
 // //     name: joi.string().required().min(1),
