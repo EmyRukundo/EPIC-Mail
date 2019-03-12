@@ -76,7 +76,7 @@ const login =(req, res)=>{
                  if(err){
                 console.log(err);
                  }
-              res.status(200).send({ status: 201, data: userResult, token });
+              res.status(201).send({ status: 201, data: userResult, token });
            });
          }else {
          return res.status(403).json({ status: 403, error: 'wrong combination  username  or password' });

@@ -39,7 +39,7 @@ const createMessage = (req, res) => {
             subject: req.body.subject,
             message: req.body.message,
             senderId: req.body.senderId,
-            receivedId: req.body.receivedId,
+            receiverId: req.body.receiverId,
             parentMessageId: req.body.parentMessageId,
             status: req.body.status,
         };

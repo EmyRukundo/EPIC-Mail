@@ -14,7 +14,7 @@ const Validation = {
     message: joi.string().trim().min(10).max(100),
     senderId: joi.number().integer().required(),
     receiverId: joi.number().integer().required(),
-    parent_message_id: joi.number().integer().required(),
+    parentMessageId: joi.number().integer().required(),
     // ​status: joi.string().required(),
     status: joi.string().alphanum().valid("sent", "draft", "read")
     .required(),
