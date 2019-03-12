@@ -1,3 +1,5 @@
+import joi from 'joi';
+import Validation from '../helpers/validations';
 
 const email =[{
     id:1,
@@ -17,15 +19,19 @@ const email =[{
      status:'sent'
  }]
 
+ //@get all messges
+
  const getMessages= (req,res)=>{
 
     res.send(email);
    if(!getMessages) res.status(404).send('the data was not found,Try again');
 };
 
-
+//@Create message
 
 const createMessage = (req, res) => {
+
+    joi.validate(req.body, Validation.messageSchema, Validation.validationOption).then((result) => {
 
     const newMessage = {
             id: email.length + 1,
@@ -38,37 +44,44 @@ const createMessage = (req, res) => {
             status: req.body.status,
         };
         email.push(newMessage);
-        res.send(newMessage);
+        res.send({status:201,newMessage});
+
+    }).catch(error => res.status(400).send({
+        status: 400,
+        error: error.details[0].message,
+      }));
 };
 
+//@specificMessage
 
   const specificEmail= (req,res)=>{
 
    const specificMessage = email.find(c => c.id === parseInt (req.params.id));
    if(!specificMessage) return res.status(404).send('The Email with the given ID was not found');
    
-   res.status(200).send(specificMessage);
+   res.status(200).send({status:200,specificMessage});
     
   };
 
+//@sentMessage
 
   const sentMessage = (req,res)=>{ 
     const sentEmail = email.find(c => c.status === req.params.status);
     if(!sentEmail) return res.status(400).send('NO any unread Email');
-    res.status(200).send(sentEmail);
+    res.status(200).send({status:200,sentEmail});
     };
     
-  
+  //@unreadMessage
   
     const unreadMessage = (req,res)=>{
    
         const unreadEmail = email.find(c => c.status === req.params.status);
         if(!unreadEmail) return res.status(400).send('NO any unread Email');
         
-        res.status(200).send(unreadEmail);
+        res.status(200).send({status:200, unreadEmail});
         };
 
-
+//@deleteEmailS
 
 const deleteEmail = (req,res)=>{
 
@@ -76,7 +89,7 @@ const deleteEmail = (req,res)=>{
     if(!deleteMessage) res.status(404).send('The Email with the given ID was not found');
     const index = email.indexOf(deleteEmail);
       email.splice(index,1);   
-      res.send({deleteMessage,message: "you deleted email successfully."});
+      res.send({status:200,message: "you deleted email successfully."});
   
   
   };
