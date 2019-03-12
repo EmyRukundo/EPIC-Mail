@@ -50,18 +50,18 @@
 
 
 ## API ENDPOINT ROUTES
-    
-    | METHOD  |	ROUTE                 |	DESCRIPTION                 |
-    |-------- |-----------------------|-----------------------------|        	                                  
-    | POST    |	api/v1/auth/signup    |    User Registration        |	
-    | POST    |	api/v1/auth/login     |	User Login 	          |
-    | GET     | api/v1/auth/getUsers  |  Retrieve all users         |
-    | POST    |	api/v1/messages       |    Send Email 	     |
-    | GET 	  | api/v1/messages       |	Retrieve Received Emails    | 	
-    | GET 	  | api/v1/messages       |    Retrieve A Specific Email| 	
-    | DELETE  |	api/v1/messages       |	Delete A Specific Email     | 	
-    | GET 	  | api/v1/message/sent   | 	Retrieve Sent Emails    | 	
-    | GET 	  | api/v1/message/unread |	Retrieve unRead Emails      |	
+   
+| METHOD  |	ROUTES                 |	DESCRIPTION                 |
+|-------- |-----------------------|-----------------------------|        	                                  
+| POST    |	api/v1/auth/signup    |    User Registration        |	
+| POST    |	api/v1/auth/login     |	   User Login 	             |
+| GET     | api/v1/auth/getUsers  |    Retrieve all users       |
+| POST    |	api/v1/messages       |    Send Email 	             |
+| GET 	  | api/v1/messages        |   	Retrieve Received Emails | 	
+| GET 	  | api/v1/messages        |    Retrieve A Specific Email| 	
+| DELETE  |	api/v1/messages       |	   Delete A Specific Email  | 	
+| GET 	  | api/v1/message/sent    | 	  Retrieve Sent Emails     | 	
+| GET 	  | api/v1/message/unread  |	   Retrieve unRead Emails   |
  
 
 ## Information on the API
