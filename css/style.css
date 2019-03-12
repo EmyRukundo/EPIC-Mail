@@ -91,15 +91,212 @@ header #login a:hover{
 }
 header .avatar {
    vertical-align: middle;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  margin-left: 33.6cm;
-  margin-bottom: -1cm;
+  margin-left: 32.5cm;
+  margin-bottom: -0.5cm;
 }
 #men{
   display: none;
 }
+
+/*inbox  */
+
+.btn {
+  
+  border: none;
+  color: black;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  max-width: 15px;
+  height: 15px;
+  margin-left: 650px;
+  margin-top: -20px;
+}
+
+/* Darker background on mouse-over */
+.btn:hover {
+  background-color: rgb(235, 8, 8);
+}
+
+
+/* Darker chat container */
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
+  max-width: 120%;
+  height: 60px;
+  text-emphasis-color: black;
+  color: black;
+}
+.darker:hover{
+  background-color: rgb(160, 79, 12);
+}
+
+/* Clear floats */
+.darker::after {
+  content: "";
+  clear: both;
+  display: table;
+  color: black;
+}
+
+/* Style images */
+.darker img {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+.darker light{
+  color: #f1f1f1;
+}
+
+/* Style the right image */
+.darker img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+  color: black;
+}
+.darker a{
+  color: grey;
+}
+
+
+/* Style time text */
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+/* Style time text */
+.time-left {
+  float: left;
+  color: #999;
+} 
+
+/* Darker chat container */
+.darke {
+  border-color: #ccc;
+  background-color: #ddd;
+  max-width: 120%;
+  height: 60px;
+  text-emphasis-color: black;
+  color: black;
+}
+.darke:hover{
+  background-color: rgb(160, 79, 12);
+}
+
+/* Clear floats */
+.darke::after {
+  content: "";
+  clear: both;
+  display: table;
+  color: black;
+}
+
+/* Style images */
+.darke img {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+.darke light{
+  color: #f1f1f1;
+}
+
+/* Style the right image */
+.darke img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+  color: black;
+}
+.darke a{
+  color: black;;
+}
+
+
+/* Style time text */
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+/* Style time text */
+.time-left {
+  float: left;
+  color: #999;
+} 
+
+
+
+
+/* Darker chat container */
+.darkeri {
+  border-color: #ccc;
+  background-color: #ddd;
+  max-width: 120%;
+  height: 60px;
+  text-emphasis-color: black;
+  color: black;
+}
+.darkeri:hover{
+  background-color: rgb(211, 93, 171);
+}
+
+/* Clear floats */
+.darkeri::after {
+  content: "";
+  clear: both;
+  display: table;
+  color: black;
+}
+
+/* Style images */
+.darkeri img {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+.darkeri light{
+  color: #f1f1f1;
+}
+
+/* Style the right image */
+.darkeri img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+  color: black;
+}
+.darkeri a{
+  color: rgb(7, 8, 53);;
+}
+
+
+/* Style time text */
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+/* Style time text */
+.time-left {
+  float: left;
+  color: #999;
+} 
+
+
 
 /* ShowCase */
 
@@ -323,6 +520,16 @@ button:hover {
   padding: 14px 20px;
   background-color: yellowgreen;
   font-size: 120%;
+  font-weight: 1000;
+}
+.forgetbtn{
+  padding: 14px 20px;
+  margin:0 400px ;
+  background-color: white;
+  font-size: 80%;
+  max-width: 150px;
+  height: 15px;
+  color:orange;
   font-weight: 1000;
 }
 

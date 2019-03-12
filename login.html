@@ -15,10 +15,10 @@
              </div><p onclick="m()" id="men"><a href="#">Menu</a></p>
              <nav id="nv">
              	<ul>
-								 <li ><a href="compose.html">Home</a></li>  
+								 <li ><a href="inbox.html">Home</a></li>  
 								 <li class="current"><a href="login.html">Login</a></li>
 										<li><a href="signUp.html">SignUp</a></li>
-										<!-- <li><a href="index.html">Log Out</a></li> -->
+									
                     
              	</ul>     	
              </nav>
@@ -44,20 +44,22 @@
     <label for="psw"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="psw" required>
         
-    <!-- <button type="submit">Login</button> -->
+  
     <label>
 			<input type="checkbox" checked="checked" name="remember"> Remember me
 			
 		</label>
 		<div class="clearfix">
-			
-			<!-- <button type="button" class="cancelbtn" href="index.html" >Cancel</button>  -->
+		
 			<button onclick="location.href='index.html'" class="cancelbtn">
 				Cancel</button>   
-			<button type="submit" class="signupbtn" href="index.html">Sign Up</button>
+			<button type="submit" class="signupbtn" href="index.html">Login</button>
 			
 		</div>	
-		<span class="psw">Forgot <a href="#">password?</a></span>
+		<button class="forgetbtn" onclick="myFunction()">Forget Password?</button>
+		<p id="demo"></p>
+
+	
   </div>
   </form>
 		
@@ -80,5 +82,15 @@
 	
 	</footer class="footer">
 	<script type="text/javascript" src="js/javascript.js"></script>
+
+	<script>
+		function myFunction() {
+			var person = prompt("Put your email here, we will send you password in few minutes ", "Working Email...");
+			if (person != null) {
+				document.getElementById("demo").innerHTML =
+				"Hello " + person + "! How are you today?";
+			}
+		}
+		</script>
  </body>
 </html>
