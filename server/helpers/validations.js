@@ -15,14 +15,11 @@ const Validation = {
     senderId: joi.number().integer().required(),
     receiverId: joi.number().integer().required(),
     parentMessageId: joi.number().integer().required(),
-    // ​status: joi.string().required(),
-    status: joi.string().alphanum().valid("sent", "draft", "read")
+    
+    status: joi.string().alphanum().valid("sent", "draft", "unread")
     .required(),
   }),
 
-// //   groupSchema: joi.object().keys({
-// //     name: joi.string().required().min(1),
-// //   }),
  
   loginSchema: joi.object().keys({
     email: joi.string().email().required(),

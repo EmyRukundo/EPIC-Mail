@@ -74,11 +74,18 @@ const createMessage = (req, res) => {
   //@unreadMessage
   
     const unreadMessage = (req,res)=>{
-   
-        const unreadEmail = email.find(c => c.status === req.params.status);
-        if(!unreadEmail) return res.status(400).send('NO any unread Email');
+   const output = [];
+    email.forEach((message) => {
+        if(message.status =="unread")
+        {
+         output.push(message);
+
+        }
+    })
         
-        res.status(200).send({status:200, unreadEmail});
+        if(!output) return res.status(400).send('NO any unread Email');
+        
+        res.status(200).send({status:200, output});
         };
 
 //@deleteEmailS

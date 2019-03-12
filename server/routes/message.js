@@ -8,7 +8,7 @@ import {getMessages,createMessage,unreadMessage,sentMessage} from '../controller
 const router = express.Router();
 
 router.get('/messages',getMessages);
-router.get('/message/:status',unreadMessage);
+router.get('/message/unread',unreadMessage);
 router.get('/message/:status',sentMessage);
 router.post('/messages',createMessage);
 
