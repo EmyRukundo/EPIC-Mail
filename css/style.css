@@ -94,8 +94,8 @@ header .avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin-left: 32.5cm;
-  margin-bottom: -0.5cm;
+  margin-left: 30.5cm;
+  margin-bottom: -0.1cm;
 }
 #men{
   display: none;
@@ -118,7 +118,7 @@ header .avatar {
 
 /* Darker background on mouse-over */
 .btn:hover {
-  background-color: rgb(235, 8, 8);
+  background-color:#35424a;
 }
 
 
@@ -132,7 +132,7 @@ header .avatar {
   color: black;
 }
 .darker:hover{
-  background-color: rgb(160, 79, 12);
+  background-color:greenyellow;
 }
 
 /* Clear floats */
@@ -189,7 +189,7 @@ header .avatar {
   color: black;
 }
 .darke:hover{
-  background-color: rgb(160, 79, 12);
+  background-color: yellowgreen;
 }
 
 /* Clear floats */
@@ -249,7 +249,7 @@ header .avatar {
   color: black;
 }
 .darkeri:hover{
-  background-color: rgb(211, 93, 171);
+  background-color: yellowgreen;
 }
 
 /* Clear floats */
@@ -524,13 +524,14 @@ button:hover {
 }
 .forgetbtn{
   padding: 14px 20px;
-  margin:0 400px ;
+  margin:0 350px ;
   background-color: white;
   font-size: 80%;
-  max-width: 150px;
+  max-width: 200px;
   height: 15px;
   color:orange;
   font-weight: 1000;
+  float:inline;
 }
 
 /* Float cancel and signup buttons and add an equal width */
