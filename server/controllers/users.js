@@ -38,8 +38,17 @@ const signUp = (req, res) => {
             password: req.body.password
 
         };
+        const userResult = users.find((user) => newUser.email == user.email);
+        
+        if (userResult) {
+          return res.status(400).json({
+            status: 400,
+            error:'Oops! Already Users exist!'
+          });
+        }else{
         users.push(newUser);
         res.send(newUser);
+        };
     }).catch(error => res.status(400).json({
         status: 400,
         error: error.details[0].message,
