@@ -60,7 +60,7 @@ const createMessage = (req, res) => {
             status: req.body.status,
         };
         email.push(newMessage);
-        res.send({status:201,newMessage});
+        res.status(201).send({status:201, data: newMessage});
 
     }).catch(error => res.status(400).send({
         status: 400,

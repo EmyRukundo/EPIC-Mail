@@ -47,7 +47,7 @@ const signUp = (req, res) => {
           });
         }else{
         users.push(newUser);
-        res.send(newUser);
+        res.status(201).send({ status:201, data: newUser});
         };
     }).catch(error => res.status(400).json({
         status: 400,
