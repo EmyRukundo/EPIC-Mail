@@ -43,7 +43,7 @@ chai.use(chaiHttp);
       };
       chai.request(app).post('/api/v1/auth/signup').send(userAccount).end((err, res) => {
         try {
-          res.should.have.status(200);
+          res.should.have.status(400);
           res.body.should.be.a('object');
         } catch (error) {
           throw error;
