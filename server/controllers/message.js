@@ -39,7 +39,7 @@ const email =[{
 
  const getMessages= (req,res)=>{
 
-    res.send(email);
+    res.send({status:200, data:email});
    if(!getMessages) res.status(404).send('the data was not found,Try again');
 };
 
@@ -75,7 +75,7 @@ const createMessage = (req, res) => {
    const specificMessage = email.find(c => c.id === parseInt (req.params.id));
    if(!specificMessage) return res.status(404).send('The Email with the given ID was not found');
    
-   res.status(200).send({status:200,specificMessage});
+   res.status(200).send({status:200,data:specificMessage});
     
   };
 
@@ -93,7 +93,7 @@ const createMessage = (req, res) => {
         
         if(!sentMail) return res.status(400).send('NO any unread Email');
         
-        res.status(200).send({status:200, sentMail});
+        res.status(200).send({status:200, data:sentMail});
         };
 
 
@@ -112,7 +112,7 @@ const createMessage = (req, res) => {
         
         if(!output) return res.status(400).send('NO any unread Email');
         
-        res.status(200).send({status:200, output});
+        res.status(200).send({status:200, data:output});
         };
 
 //@deleteEmailS

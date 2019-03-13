@@ -20,7 +20,7 @@ const users =[{
 //@ get all users
 
 const getUsers= (req,res)=>{
-    res.send(users);
+    res.send({status:200, data: users});
    if(!getUsers) res.status(400).send('the data was not found,Try again');
 };
 
