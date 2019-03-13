@@ -39,6 +39,8 @@ const signUp = (req, res) => {
 
         };
         const userResult = users.find((user) => newUser.email == user.email);
+
+        
         
         if (userResult) {
           return res.status(400).json({
@@ -46,13 +48,23 @@ const signUp = (req, res) => {
             error:'Oops! Already Users exist!'
           });
         }else{
+        
+        jwt.sign({user: newUser.email }, 'secret',(err,token)=>{
+                 if(err){
+                console.log(err);
+                 }else {
         users.push(newUser);
-        res.status(201).send({ status:201, data: newUser});
-        };
-    }).catch(error => res.status(400).json({
-        status: 400,
-        error: error.details[0].message,
-      }));
+        res.status(201).send({ status:201, data: newUser, token });
+        }
+      });
+        }
+    
+  })
+    
+    // }).catch(error => res.status(400).json({
+    //     status: 400,
+    //     error: error.details[0].message,
+    //   }));
 };
 
 //@login
