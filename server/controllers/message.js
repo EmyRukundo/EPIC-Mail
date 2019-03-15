@@ -64,7 +64,7 @@ const createMessage = (req, res) => {
 
     }).catch(error => res.status(400).send({
         status: 400,
-        error: error.details[0].message,
+        error: error.details[0].message.replace(/[$\/\\#,+()$~%.'":*<>{}]/g,''),
       }));
 };
 

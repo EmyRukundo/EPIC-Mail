@@ -27,7 +27,14 @@ const getUsers= (req,res)=>{
 
 const signUp = (req, res) => {
 
-    joi.validate(req.body, Validation.userSchema, Validation.validationOption).then((result) => {
+    joi.validate(req.body, Validation.userSchema, Validation.validationOption,
+      (err, result) => {
+      if (err) {
+        return res.status(400).json({
+          status: 400,
+          error: err.details[0].message.replace(/[$\/\\#,+()$~%.'":*<>{}]/g,''),
+        });
+      }
 
     const newUser = {
             id: users.length + 1,
@@ -58,9 +65,12 @@ const signUp = (req, res) => {
       });
         }
     
-  })
+  });
     
-    
+    // }).catch(error => res.status(400).json({
+    //     status: 400,
+    //     error: error.details[0].message,
+    //   }));
 };
 
 //@login
@@ -74,7 +84,7 @@ const login =(req, res)=>{
      if (err) {
        return res.status(400).json({
          status: 400,
-         error: err.details,
+         error: err.details[0].message.replace(/[$\/\\#,+()$~%.'":*<>{}]/g,''),
        });
      }
      const userAccount = {
