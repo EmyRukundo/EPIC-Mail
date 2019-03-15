@@ -1,6 +1,5 @@
 import joi from 'joi';
-import jwt from 'jsonwebtoken';
-import bcryptjs from "bcryptjs";
+import jwt from 'jsonwebtoken'
 import Validation from '../helpers/validations';
 import Helper from '../helpers/helpers';
 
@@ -21,7 +20,7 @@ const users =[{
 
 const getUsers= (req,res)=>{
     res.send({status:200, data: users});
-   if(!getUsers) res.status(400).send('the data was not found,Try again');
+      if(!getUsers) res.status(400).send('the data was not found,Try again');
 };
 
 //@ create user
@@ -61,10 +60,7 @@ const signUp = (req, res) => {
     
   })
     
-    // }).catch(error => res.status(400).json({
-    //     status: 400,
-    //     error: error.details[0].message,
-    //   }));
+    
 };
 
 //@login
