@@ -21,7 +21,7 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/EmyRukundo/EPIC-Mail/issues"
-  },   
+  },
   "homepage": "https://github.com/EmyRukundo/EPIC-Mail#readme",
   "dependencies": {
     "babel": "^6.23.0",

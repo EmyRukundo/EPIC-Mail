@@ -1,6 +1,6 @@
 import joi from 'joi';
 
-const Validation = {
+const Validator = {
     
   userSchema: joi.object().keys({
     email: joi.string().email().required(),
@@ -11,25 +11,40 @@ const Validation = {
   }),
   messageSchema: joi.object().keys({
     subject: joi.string().required(),
-    message: joi.string().trim().min(10).max(100),
-    senderId: joi.number().integer().required(),
-    receiverId: joi.number().integer().required(),
-    parentMessageId: joi.number().integer().required(),
-    
-    status: joi.string().alphanum().valid("sent", "draft", "unread")
-    .required(),
+    messages: joi.string().required(),
+    receiverid: joi.number().integer().required(),
+    status: joi.string().required(),
   }),
 
+  groupSchema: joi.object().keys({
+    name: joi.string().required().min(4),
+    role: joi.string().required().min(2),
+   
+  }),
+  updategroupSchema: joi.object().keys({
+    name: joi.string().required().min(4),
+  }),
  
   loginSchema: joi.object().keys({
     email: joi.string().email().required(),
     password: joi.string().required(),
   }),
+  
+  groupMemberSchema: joi.object().keys({
+    userid: joi.number().integer().required(),
+    userole: joi.string().required(),
+    
+  }),
+  emailgroupSchema: joi.object().keys({
+    subject: joi.string().required(),
+    message: joi.string().required(), 
+    status: joi.string().required(),
+  }),
   validationOption: {
     abortEarly: false,
-    allowUnknown: true,
+    allowUnknown: false,
     stripUnknown: true,
   },
  
 };
-export default Validation;
+export default Validator; 
