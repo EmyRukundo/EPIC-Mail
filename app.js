@@ -4,6 +4,8 @@ import userRouter from './server/routes/users';
 import swagger from 'swagger-ui-express';
 import yamljs from 'yamljs';
 
+const port = process.env.PORT || 4000;
+
 const swaggerDocumment = yamljs.load('server/swagger/document.yml');
 
 const app = express();
@@ -23,14 +25,12 @@ app.get('/',(req,res)=>{
 
 app.get('/*',(req,res)=>{
 
-});
-
-app.get((err,req,res,next) => {
-					  
 	res.status(404).send('This is not the page you are looking for');
+
 });
 
-const port = process.env.PORT || 4000;
+
+
 app.listen(port, ()=> console.log(`Listening on port ${port}...`));
 
 export default app;
