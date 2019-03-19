@@ -7,11 +7,7 @@ dotenv.config();
 class Database {
   constructor() {
     this.pool = new Pool({
-    //   user: 'epic_mail',
-    //   host: 'localhost',
-    //   database: 'epic_mail',
-    //   password: 'andela',
-    //   port: 5432 
+    
     connectionString: process.env.DATABASE_URL
     });
 
