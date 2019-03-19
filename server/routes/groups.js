@@ -1,13 +1,12 @@
 import express from 'express';
-import createGroup from '../controllers/groups';
-import verifyToken from '../middleware/authenticate';
-
+import {getGroups,createGroup} from '../controllers/groups';
 const router = express.Router();
 
 
 
+router.get('/',getGroups);
+router.post('/',createGroup);
 
-router.post('/groups',verifyToken,createGroup);
 
 
 export default router;
