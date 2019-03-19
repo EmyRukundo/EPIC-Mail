@@ -1,108 +1,93 @@
-import joi from 'joi';
-import jwt from 'jsonwebtoken'
-import Validation from '../helpers/validations';
+import jsonWebToken from 'jsonwebtoken';
+import Database from '../db/db-connection';
 import Helper from '../helpers/helpers';
 
-const users =[{
-    id:1,
-    email:'rukundoemma@gmail.com',
-	firstname:'Emmanuel',
-	lastname:'Rukundo',
-	password:'$2a$08$TgdmWQP3PuiV4mQFBPgeNONm/s4rmBe3nBsj.1kx96DM5/pZ6JIzC'
-},{
-    id:2,
-    email:'ericmugume@yahoo.com',
-	firstname:'Eric',
-	lastname:'mugume',
-	password:'pass2019'
-}]
-//@ get all users
 
-const getUsers= (req,res)=>{
-    res.send({status:200, data: users});
-      if(!getUsers) res.status(400).send('the data was not found,Try again');
-};
-
-//@ create user
-
-const signUp = (req, res) => {
-
-    joi.validate(req.body, Validation.userSchema, Validation.validationOption).then((result) => {
-
-    const newUser = {
-            id: users.length + 1,
-            email: req.body.email,
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
-            password: req.body.password
-
-        };
-        const userResult = users.find((user) => newUser.email == user.email);
-
-        
-        
-        if (userResult) {
-          return res.status(400).json({
-            status: 400,
-            error:'Oops! Already Users exist!'
-          });
-        }else{
-        
-        jwt.sign({user: newUser.email }, 'secret',(err,token)=>{
-                 if(err){
-                console.log(err);
-                 }else {
-        users.push(newUser);
-        res.status(201).send({ status:201, data: newUser, token });
-        }
-      });
-        }
-    
-  })
-    
-    
-};
-
-//@login
+//@@ signup user
+  const signupUser = (req, res) => {
 
 
-const login =(req, res)=>{
+        const {
+            firstname,
+            lastname,
+            email,
+            password,
+        }=req.body;
+     Database.executeQuery(`SELECT * FROM user_table WHERE email='${email}' `).then((result)=>{
+         if(result.rows.length){
+             return res.status(400).json({
+                 status:400,
+                 error: "The email is already exist",
+             })
+         }
 
-
- joi.validate(req.body, Validation.loginSchema, Validation.validationOption,
-    (err, result) => {
-     if (err) {
-       return res.status(400).json({
-         status: 400,
-         error: err.details,
-       });
-     }
-     const userAccount = {
-       email: result.email,
-       password: result.password,
-     };
-    
-     const userResult = users.find((user) => userAccount.email == user.email);
-    
-    
-       if (userResult) {
+     })
        
-         if (Helper.comparePassword(userAccount.password, userResult.password)) {
-           
-           jwt.sign({user: userResult.email }, 'secret',(err,token)=>{
-                 if(err){
-                console.log(err);
-                 }
-              res.status(201).send({ status: 201, data: userResult, token });
-           });
-         }else {
-         return res.status(403).json({ status: 403, error: 'wrong combination  username  or password' });
-       }}
-     });
+    const hashPassword = Helper.hashPassword(req.body.password);
+    
+      const newUser = [
+        req.body.email,
+        req.body.firstname,
+        req.body.lastname,   
+        hashPassword
+    
+      ];
+      const user = Database.executeQuery(`INSERT INTO user_table (email, firstname, lastname, password)
+      VALUES ($1,$2,$3,$4) RETURNING *`, newUser);
+    
+      user.then((userResult) => {  
+     
 
-    };
+        const token = jsonWebToken.sign({ user: userResult.rows }, process.env.SECRETKEY);
+          return res.status(201).json({
+            status: 201,
+            data:token
+          });       
+      
+        
+      }).catch(error=> {
+        
+          res.status(500).json({
+        status: 500,
+        error:'Internal server error',
+      })});
+  
+  };
 
- 
-export {
-    getUsers,signUp,login
+
+  //@@login user
+
+  const loginUser = (req, res) => {
+    
+   
+   const userAccount={
+       email:req.body.email,
+       password:req.body.password
+   }
+
+    const user = Database.executeQuery(`SELECT * FROM user_table WHERE email = '${userAccount.email}'`);
+ 
+    user.then((userResult) => {
+        console.log(userResult.rows);
+      if (userResult.rows.length){
+        if (Helper.comparePassword(userAccount.password, userResult.rows[0].password)) {
+            const token = jsonWebToken.sign({ user: userResult.rows }, process.env.SECRETKEY);
+            console.log("No error here");
+            return res.status(200).json({ 
+                status: 200, 
+                data: token 
+              }); 
+        
+        }
+      }else{
+        return res.status(403).json({ 
+            status: 403, 
+            error: 'Invalid username  or password' });
+      }
+    }).catch(error => res.status(500).json({
+         status: 500, 
+      error: `Internal server error ${error}` }));
 };
+  export{
+      signupUser,loginUser
+  }
