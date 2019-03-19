@@ -1,36 +1,56 @@
 import jsonWebToken from 'jsonwebtoken';
 import Database from '../db/db-connection';
+import Helper from '../helpers/helpers';
 
 
 //@@ signup user
   const signupUser = (req, res) => {
+
+
+        const {
+            firstname,
+            lastname,
+            email,
+            password,
+        }=req.body;
+     Database.executeQuery(`SELECT * FROM user_table WHERE email='${email}' `).then((result)=>{
+         if(result.rows.length){
+             return res.status(400).json({
+                 status:400,
+                 error: "The email is already exist",
+             })
+         }
+
+     })
+       
+    const hashPassword = Helper.hashPassword(req.body.password);
     
       const newUser = [
         req.body.email,
         req.body.firstname,
         req.body.lastname,   
-        req.body.password   
-       
-      ];
+        hashPassword
     
+      ];
       const user = Database.executeQuery(`INSERT INTO user_table (email, firstname, lastname, password)
       VALUES ($1,$2,$3,$4) RETURNING *`, newUser);
-      user.then((userResult) => {
-          
-          
-        if (userResult.rows.length) { 
-            const token = jsonWebToken.sign({ user: rows }, process.env.SECRETKEY);
+    
+      user.then((userResult) => {  
+     
+
+        const token = jsonWebToken.sign({ user: userResult.rows }, process.env.SECRETKEY);
           return res.status(201).json({
             status: 201,
             data:token
-          });
+          });       
+      
         
-      }
+      }).catch(error=> {
         
-      }).catch(error=> res.status(400).json({
-        status: 400,
-        error:'The user is already exist',
-      }));
+          res.status(500).json({
+        status: 500,
+        error:'Internal server error',
+      })});
   
   };
 
@@ -38,20 +58,21 @@ import Database from '../db/db-connection';
   //@@login user
 
   const loginUser = (req, res) => {
-
-    const userAccount = [
-      req.body.email,
-      req.body.password
-    ];
+    
+   
+   const userAccount={
+       email:req.body.email,
+       password:req.body.password
+   }
 
     const user = Database.executeQuery(`SELECT * FROM user_table WHERE email = '${userAccount.email}'`);
-
-
+ 
     user.then((userResult) => {
+        console.log(userResult.rows);
       if (userResult.rows.length){
         if (Helper.comparePassword(userAccount.password, userResult.rows[0].password)) {
-            const token = jsonWebToken.sign({ user: rows }, process.env.SECRETKEY);
-       
+            const token = jsonWebToken.sign({ user: userResult.rows }, process.env.SECRETKEY);
+            console.log("No error here");
             return res.status(200).json({ 
                 status: 200, 
                 data: token 
