@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import userRouter from './server/routes/users';
+import groupsRouter from './server/routes/groups';
 import swagger from 'swagger-ui-express';
 import yamljs from 'yamljs';
 
@@ -16,7 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api/v2/auth/',userRouter);
-
+app.use('/api/V2/',groupsRouter);
 
 app.get('/',(req,res)=>{
 
