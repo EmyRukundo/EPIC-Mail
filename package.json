@@ -7,7 +7,6 @@
     "start": "babel-node app.js",
     "test": " nyc mocha ./server/test/*.js --require babel-register  --exit",
     "heroku-postbuild": "npm install",
-    "create": "node --require babel-register server/db/db.js tablesCreate",
     "dev": "nodemon --require babel-core/register --require babel-polyfill app.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
