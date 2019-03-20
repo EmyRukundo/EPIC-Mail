@@ -118,4 +118,5 @@ class Database {
     await this.executeQuery(this.emailgroupTable);
   }
 }
+
 export default new Database();
