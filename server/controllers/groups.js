@@ -31,4 +31,50 @@ const createGroup = (req, res) => {
       }));
  
   };
-  export default createGroup;
+ 
+  //@get all groups owned by given user 
+  const getGroups = (req, res) => {
+   
+    let token = 0;
+  let decodedToken = '';
+  let userId = '';
+  if (req.headers.authorization) {
+    token = req.headers.authorization.split(' ')[1];
+    decodedToken = jsonWebToken.verify(token, 'secret');
+    userId = decodedToken.user[0].id;
+  } else {
+    return res.status(403).json({
+      status: 403,
+      error:"you are not authorised to get any group",
+    });
+  }
+  const groupSql = Database.executeQuery(`SELECT * FROM group_table WHERE ownerid = '${userId}'`);
+    
+  groupSql.then((result) => {
+
+    if (result.rows.length) {
+
+      return res.status(200).json({
+
+        status: 200,
+        data: result.rows
+      });
+    }
+    return res.status(404).json({
+
+      status: 404,
+      error: 'You have not created any group!',
+
+    });
+  }).catch(error => res.status(500).json({
+
+    status: 500,
+    error: `Internal server error ${error}`,
+
+  }));
+};
+
+
+  export {
+      createGroup,getGroups
+    };

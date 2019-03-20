@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api/v2/auth/',userRouter);
-app.use('/api/V2/',groupsRouter);
+app.use('/api/V2/groups',groupsRouter);
 
 app.get('/',(req,res)=>{
 
