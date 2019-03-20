@@ -6,20 +6,19 @@ import uuid from 'uuid';
 
 //@@get all messages
 
-const getMessages = async (req, res) => {
+// const getMessages = async (req, res) => {
  
-res.status(200).json({    
-          status: 200,
-          data:await messages(),
-  });
-}
+// res.status(200).json({    
+//           status: 200,
+//           data:await messages(),
+//   });
+// }
 
   //@@Create message
 
   
   const createMessage = (req, res) => {
    
-    
       const newMessage = [
         new Date(),
         req.body.subject,
@@ -55,11 +54,15 @@ res.status(200).json({
 
   const specificEmail = (req, res) => {
 
-  
-    const sql = `SELECT * FROM messages_table WHERE id = '${req.params.id}'`;
+    const ownerIt = Database.executeQuery(`SELECT * FROM messages_table WHERE senderid='${req.body.userId}'`);
 
-    const messageSql = Database.executeQuery(sql);
+    ownerIt.then((result) =>{
+        
+        if(result.rows ==0) { return res.status(404).send('No email found with given user id')}});
 
+    
+    const messageSql = Database.executeQuery(`SELECT * FROM messages_table WHERE id = '${req.params.id}'`);
+ 
     messageSql.then((result) => {
 
       if (result.rows.length) {
@@ -73,7 +76,7 @@ res.status(200).json({
       return res.status(404).json({
 
         status: 404,
-        error: 'No email found on given id ',
+        error: 'No email found!',
 
       });
     }).catch(error => res.status(500).json({
@@ -84,24 +87,13 @@ res.status(200).json({
     }));
   };
 
+
   
   //@get a sent message
     
     const sentMessage = (req, res) => {
           
-      let token = 0;
-      let decodedToken = '';
-      let userId = '';
-      if (req.headers.authorization) {
-        token = req.headers.authorization.split(' ')[1];
-        decodedToken = jsonWebToken.verify(token, 'secret');
-        userId = decodedToken.user[0].id;
-      } else {
-        return res.status(403).json({
-          status: 403,
-          error:" Oops,you are not authorised!!",
-        });
-      } 
+
         const sql = "SELECT * FROM messages_table WHERE status =$1"; 
         const messageSql = Database.executeQuery(sql);
         console.log(messageSql.rows);
@@ -225,5 +217,5 @@ const unreadMessage = (req, res) => {
 //   };
 
     export{
-        getMessages,createMessage,specificEmail,sentMessage,unreadMessage,deleteEmail
+        createMessage,specificEmail,sentMessage,unreadMessage,deleteEmail
       };
