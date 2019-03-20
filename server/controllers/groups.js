@@ -243,10 +243,10 @@ const groupMember = (req, res) => {
       
       if(istableAv.rows ==0) { return res.status(404).send('Table does not exist')}});
 
-
-  const checkGroupSql = `SELECT * FROM group_table WHERE ownerid='${userId}'`;
-  
-  const isAvailable = Database.executeQuery(checkGroupSql);
+  const isAvailable = Database.executeQuery(`SELECT * FROM group_table WHERE ownerid='${userId}'`);
+  isAvailable.then((isOwn) =>{
+      
+    if(isOwn.rows ==0) { return res.status(404).send('You are not allowed to add user')}});
 
      
           const member=[
@@ -281,10 +281,54 @@ const groupMember = (req, res) => {
             }));
         
 };
+//@@ delete user in the group
 
+const deleteMember = async (req, res) => {
+
+  let token = 0;
+    let decodedToken = '';
+    let userId = '';
+    if (req.headers.authorization) {
+      token = req.headers.authorization.split(' ')[1];
+      decodedToken = jsonWebToken.verify(token, 'secret');
+      userId = decodedToken.user[0].id;
+    } else {
+      return res.status(403).json({
+        status: 403,
+        error:" Oops,you are not authorised!!",
+      });
+    }
+
+    // const tableAv = Database.executeQuery(`SELECT * FROM group_table WHERE id='${req.params.groupid}'`);
+
+    // tableAv.then((istableAv) =>{  
+
+    //     if(istableAv.rows ==0) { return res.status(404).send('Table does not exist')}});
+
+
+        const ownerGroup = Database.executeQuery(`SELECT * FROM group_table WHERE ownerid='${userId}'`);
+        ownerGroup.then((isOwn) =>{       
+          if(isOwn.rows ==0) { return res.status(404).send('You are not allowed to add user')}});
+
+          
+          const tableAv = Database.executeQuery( `DELETE FROM members_table WHERE id='${req.params.id}' and groupid='${req.params.groupid}' RETURNING *`);
+
+          tableAv.then((istableAv) =>{  
+      
+              if(istableAv.rows ==0) { return res.status(404).send('Table does not exist')}});
+           
+  //   const sql = `DELETE FROM members_table WHERE id='${req.params.id}' and groupid='${req.params.groupid}' RETURNING *`;
+
+  //   Database.executeQuery(sql).then((result) => {
+    
+  //   res.status(202).json({ status:202,data:result.rows, message: "Deleted user successful" });
+    
+  // }).catch(error => res.status(500).json({ status: 500, error: `Server error ${error}` }));
+
+}
 
 
 
   export {
-      createGroup,getGroups,updateGroup,specificGroup,deleteGroup,groupMember
+      createGroup,getGroups,updateGroup,specificGroup,deleteGroup,groupMember,deleteMember
     };
