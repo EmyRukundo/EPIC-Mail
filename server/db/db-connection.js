@@ -72,8 +72,10 @@ class Database {
     CREATE TABLE IF NOT EXISTS members_table (
         id SERIAL PRIMARY KEY,
         groupid VARCHAR(128) NOT NULL,
-        userid VARCHAR(128) NOT NULL,
-        userole VARCHAR(128) NOT NULL
+        userid SERIAL NOT NULL,
+        userole VARCHAR(128) NOT NULL,
+        FOREIGN KEY (userid) REFERENCES user_table(id) ON DELETE CASCADE
+        
     );
     `;
     this.emailgroupTable = `

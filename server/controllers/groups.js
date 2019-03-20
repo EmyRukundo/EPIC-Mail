@@ -198,7 +198,7 @@ const deleteGroup = async (req, res) => {
       const tableAv = Database.executeQuery(`SELECT * FROM group_table WHERE id='${req.params.id}'`);
 
       tableAv.then((istableAv) =>{
-          console.log(istableAv.rows);
+          
           if(istableAv.rows ==0) { return res.status(404).send('Table does not exist')}});
     
       const isAvailable = Database.executeQuery(`SELECT * FROM group_table WHERE ownerid='${userId}'`);
@@ -218,6 +218,73 @@ const deleteGroup = async (req, res) => {
         }
   })
   }
+
+  //@@ ADD USER TO THE GROUP
+
+const groupMember = (req, res) => {
+
+  let token = 0;
+  let decodedToken = '';
+  let userId = '';
+  if (req.headers.authorization) {
+    token = req.headers.authorization.split(' ')[1];
+    decodedToken = jsonWebToken.verify(token, 'secret');
+    userId = decodedToken.user[0].id;
+  } else {
+    return res.status(403).json({
+      status: 403,
+      error:"First create account!",
+    });
+  }
+
+  const tableAv = Database.executeQuery(`SELECT * FROM group_table WHERE id='${req.params.groupid}'`);
+
+  tableAv.then((istableAv) =>{
+      
+      if(istableAv.rows ==0) { return res.status(404).send('Table does not exist')}});
+
+
+  const checkGroupSql = `SELECT * FROM group_table WHERE ownerid='${userId}'`;
+  
+  const isAvailable = Database.executeQuery(checkGroupSql);
+
+     
+          const member=[
+            req.params.groupid,
+            req.body.userid,
+            req.body.userole
+            
+          ]
+          
+             
+            const addMember = Database.executeQuery('INSERT INTO members_table(groupid,userid,userole) VALUES ($1,$2,$3) RETURNING *',member);
+            console.log(addMember.rows);
+            addMember.then((memberResult) => {
+        console.log(memberResult.rows);
+              if (memberResult.rows) {
+                console.log(memberResult.rows);
+                if (memberResult.rows.length) {
+
+                  return res.status(201).json({
+                    status: 201,
+                    data: memberResult.rows,
+                  });
+                }
+              }
+              return res.status(400).json({
+                status: 400,
+                error: 'User does not exist ',
+              });
+            }).catch(error => res.status(500).json({
+              status: 500,
+              error: `Internal server error ${error}`,
+            }));
+        
+};
+
+
+
+
   export {
-      createGroup,getGroups,updateGroup,specificGroup,deleteGroup
+      createGroup,getGroups,updateGroup,specificGroup,deleteGroup,groupMember
     };
