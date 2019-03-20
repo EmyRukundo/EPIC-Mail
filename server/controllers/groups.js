@@ -256,7 +256,7 @@ const groupMember = (req, res) => {
             
           ]
           
-             
+
             const addMember = Database.executeQuery('INSERT INTO members_table(groupid,userid,userole) VALUES ($1,$2,$3) RETURNING *',member);
             console.log(addMember.rows);
             addMember.then((memberResult) => {
@@ -283,8 +283,45 @@ const groupMember = (req, res) => {
 };
 
 
+// @DELETE A MEMBER FROM A SPECIFIC GROUP
+
+const deleteMember = async (req, res) => {
+  let token = 0;
+    let decodedToken = '';
+    let userId = '';
+    if (req.headers.authorization) {
+      token = req.headers.authorization.split(' ')[1];
+      decodedToken = jsonWebToken.verify(token, 'secret');
+      userId = decodedToken.user[0].id;
+    } else {
+      return res.status(403).json({
+        status: 403,
+        error:" Oops,you are not authorised!!",
+      });
+    }
+    const checkGroupSql = `SELECT * FROM group_table WHERE ownerid='${userId}'`;
+    const isAvailable = Database.executeQuery(checkGroupSql);
+    
+    isAvailable.then((isValid) => {      
+      if (isValid.rows) {
+        if (isValid.rows.length) {
+           
+  const sql = `DELETE FROM members_table WHERE groupid='${req.params.groupid}' and userid='${req.params.id}' RETURNING *`;
+
+  Database.executeQuery(sql).then((result) => {
+    
+    res.status(202).json({ status:202,data:result.rows, message: "Deleted user successful" });
+    
+  }).catch(error => res.status(500).json({ status: 500, error: `Server error ${error}` }));
+};
+      }
+}).catch(error => res.status(500).json({ status: 500, error: ` error ${error}` }));
+}
+
+
+
 
 
   export {
-      createGroup,getGroups,updateGroup,specificGroup,deleteGroup,groupMember
+      createGroup,getGroups,updateGroup,specificGroup,deleteGroup,groupMember,deleteMember
     };

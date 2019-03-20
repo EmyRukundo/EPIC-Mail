@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../app.js';
+import pg from 'pg';
 
 process.env.NODE_ENV = 'test';
 
