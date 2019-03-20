@@ -38,10 +38,12 @@ class Database {
         created_on DATE NOT NULL,    
         subject VARCHAR(60) NOT NULL,
         messages VARCHAR(128) NOT NULL,
-        senderid INTEGER NOT NULL,
-        receiverid INTEGER NOT NULL,
-        parentMessageId UUID NOT NULL,
-        status VARCHAR(30) NOT NULL
+        senderid INTEGER NOT NULL, 
+        receiverid INTEGER NOT NULL, 
+        parentMessageId INTEGER NOT NULL,
+        status VARCHAR(30) NOT NULL,
+        FOREIGN KEY (senderid) REFERENCES user_table(id) ON DELETE CASCADE,
+        FOREIGN KEY (receiverid) REFERENCES user_table(id) ON DELETE CASCADE
     );  
     `;
     this.sentTable = `
