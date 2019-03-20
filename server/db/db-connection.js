@@ -7,11 +7,7 @@ dotenv.config();
 class Database {
   constructor() {
     this.pool = new Pool({
-    //   user: 'epic_mail',
-    //   host: 'localhost',
-    //   database: 'epic_mail',
-    //   password: 'andela',
-    //   port: 5432 
+  
     connectionString: process.env.DATABASE_URL
     });
 
@@ -67,7 +63,6 @@ class Database {
     CREATE TABLE IF NOT EXISTS group_table (
         id SERIAL PRIMARY KEY,
         name VARCHAR(128) NOT NULL,
-        role VARCHAR(128) NOT NULL,
         ownerid SERIAL REFERENCES user_table (id) ON DELETE CASCADE
     );
     `;
