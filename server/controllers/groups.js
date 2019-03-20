@@ -75,6 +75,135 @@ const createGroup = (req, res) => {
 };
 
 
+  //@GET SPECIFIC GROUP
+
+  const specificGroup = (req, res) => {
+
+    const sql = `SELECT * FROM group_table WHERE id = '${req.params.id}'`;
+
+    const groupSql = Database.executeQuery(sql);
+
+    groupSql.then((result) => {
+
+      if (result.rows.length) {
+
+        return res.status(200).json({
+
+          status: 200,
+          data: result.rows
+        });
+      }
+      return res.status(404).json({
+
+        status: 404,
+        error: 'a group with given id was not found!',
+
+      });
+    }).catch(error => res.status(500).json({
+
+      status: 500,
+      error: `Internal server error ${error}`,
+
+    }));
+  };
+
+
+
+//@UPDATE GROUP Name
+
+const updateGroup = (req, res) => {
+
+    let token = 0;
+    let decodedToken = '';
+    let userId = '';
+    if (req.headers.authorization) {
+      token = req.headers.authorization.split(' ')[1];
+      decodedToken = jsonWebToken.verify(token, 'secret');
+      userId = decodedToken.user[0].id;
+    } else {
+      return res.status(403).json({
+        status: 403,
+        error:"Sorry,you do not have a group, first create it!!",
+      });
+    }
+
+    const checkGroupSql = `SELECT * FROM group_table WHERE ownerid='${userId}'`;
+    const isAvailable = Database.executeQuery(checkGroupSql);
+    isAvailable.then((isValid) => {
+      if (isValid.rows) {
+        if (isValid.rows.length) {   
+            const name =req.body.name;
+
+              const sql = `UPDATE group_table SET name = '${name}' WHERE id = '${req.params.id}' RETURNING *`
+
+              const editName = Database.executeQuery(sql);
+              editName.then((updatenameResult) => {
+
+                if (updatenameResult.rows) {
+
+                  if (updatenameResult.rows.length) {
+
+                    return res.status(201).json({
+                      status: 201,
+                      data: updatenameResult.rows,
+                    });
+                  }
+                }
+  
+                return res.status(400).json({
+                  status: 400,
+                  error: 'You do not own this group ',
+                });
+              }).catch(error => res.status(500).json({
+                status: 500,
+                error: `Internal server error ${error}`,
+              }));
+           
+        }
+      }
+    })
+  };
+
+// @@DELETE GROUP
+
+const deleteGroup = async (req, res) => {
+
+    let token = 0;
+      let decodedToken = '';
+      let userId = '';
+      if (req.headers.authorization) {
+        token = req.headers.authorization.split(' ')[1];
+        decodedToken = jsonWebToken.verify(token, 'secret');
+        userId = decodedToken.user[0].id;
+      } else {
+        return res.status(403).json({
+          status: 403,
+          error:" Oops,you are not authorised!!",
+        });
+      }
+      const tableAv = Database.executeQuery(`SELECT * FROM group_table WHERE id='${req.params.id}'`);
+
+      tableAv.then((istableAv) =>{
+          console.log(istableAv.rows);
+          if(istableAv.rows ==0) { return res.status(404).send('Table does not exist')}});
+    
+      const isAvailable = Database.executeQuery(`SELECT * FROM group_table WHERE ownerid='${userId}'`);
+      
+      isAvailable.then((isValid) => {
+        if(!isValid) res.status(404).send('The Email with the given ID was not found');
+        if (isValid.rows) {
+          if (isValid.rows.length) {
+             
+  
+    Database.executeQuery(`DELETE FROM group_table WHERE id = '${req.params.id}' and ownerid='${userId}' RETURNING *`).then((result) => {
+      
+      res.status(202).json({ status:202,message: "Deleted group successful" });
+      
+    }).catch(error => res.status(500).json({ status: 500, error: `Server error ${error}` }));
+  };
+        }
+  })
+  }
   export {
-      createGroup,getGroups
+      createGroup,getGroups,updateGroup,specificGroup,deleteGroup
     };
