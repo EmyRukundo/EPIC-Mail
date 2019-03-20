@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "babel-node app.js",
-    "test": " nyc mocha ./server/test/*.js --require babel-register  --exit",
+    "test": " nyc mocha ./server/test/groups.js --require babel-register  --exit",
     "heroku-postbuild": "npm install",
     "dev": "nodemon --require babel-core/register --require babel-polyfill app.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
@@ -25,6 +25,7 @@
   "homepage": "https://github.com/EmyRukundo/EPIC-Mail#readme",
   "dependencies": {
     "@babel/register": "^7.0.0",
+    "@babel/runtime": "^7.4.0",
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
