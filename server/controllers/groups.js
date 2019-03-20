@@ -164,6 +164,46 @@ const updateGroup = (req, res) => {
     })
   };
 
+// @@DELETE GROUP
+
+const deleteGroup = async (req, res) => {
+
+    let token = 0;
+      let decodedToken = '';
+      let userId = '';
+      if (req.headers.authorization) {
+        token = req.headers.authorization.split(' ')[1];
+        decodedToken = jsonWebToken.verify(token, 'secret');
+        userId = decodedToken.user[0].id;
+      } else {
+        return res.status(403).json({
+          status: 403,
+          error:" Oops,you are not authorised!!",
+        });
+      }
+      const tableAv = Database.executeQuery(`SELECT * FROM group_table WHERE id='${req.params.id}'`);
+
+      tableAv.then((istableAv) =>{
+          console.log(istableAv.rows);
+          if(istableAv.rows ==0) { return res.status(404).send('Table does not exist')}});
+    
+      const isAvailable = Database.executeQuery(`SELECT * FROM group_table WHERE ownerid='${userId}'`);
+      
+      isAvailable.then((isValid) => {
+        if(!isValid) res.status(404).send('The Email with the given ID was not found');
+        if (isValid.rows) {
+          if (isValid.rows.length) {
+             
+  
+    Database.executeQuery(`DELETE FROM group_table WHERE id = '${req.params.id}' and ownerid='${userId}' RETURNING *`).then((result) => {
+      
+      res.status(202).json({ status:202,message: "Deleted group successful" });
+      
+    }).catch(error => res.status(500).json({ status: 500, error: `Server error ${error}` }));
+  };
+        }
+  })
+  }
   export {
-      createGroup,getGroups,updateGroup,specificGroup 
+      createGroup,getGroups,updateGroup,specificGroup,deleteGroup
     };
