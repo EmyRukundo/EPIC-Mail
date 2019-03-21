@@ -1,5 +1,5 @@
 import express from 'express';
-import {getMessages,createMessage,unreadMessage,sentMessage,deleteEmail,specificEmail} from '../controllers/message';
+import {getMessages,testendpoint, createMessage,unreadMessage,sentMessage,deleteEmail,specificEmail} from '../controllers/message';
 import verifyToken from '../middleware/authenticate';
 import messageValidate from '../helpers/validation/messages';
 
@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/:id',verifyToken,specificEmail);
 router.get('/',verifyToken,getMessages);
 router.get('/unread',verifyToken,unreadMessage);
-router.get('/sent',verifyToken,sentMessage);
+router.get('/sent',verifyToken,testendpoint);
 router.post('/',validate,verifyToken,createMessage);
 router.delete('/:id/delete',verifyToken,deleteEmail);
 

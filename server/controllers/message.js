@@ -7,8 +7,6 @@ import uuid from 'uuid';
 
 // @@get all messages
 
-
-
 const getMessages = async (req, res) => {
   selectFrom('messages_table').then((users) => {
     if (users.rows) {
@@ -34,7 +32,7 @@ const getMessages = async (req, res) => {
      
       
       const messageSql = Database.executeQuery(`INSERT INTO messages_table(created_on,subject,messages,senderid,receiverid,parentmessageid,status) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *`, newMessage);
-      console.log(messageSql.rows);
+      
       messageSql.then((insertedMessage) => {   
       
         if (insertedMessage.rows) {
@@ -93,42 +91,48 @@ const getMessages = async (req, res) => {
 
   
   //@get a sent message
-    
-    
-  const sentMessage = (req, res) => {
-
-    const ownerIt = Database.executeQuery(`SELECT * FROM messages_table WHERE senderid='${req.body.userId}'`);
-
-    ownerIt.then((result) =>{
-        
-        if(result.rows ==0) { return res.status(404).send('No sent email found with given user id')}});
-
-    
-    const messageSql = Database.executeQuery(`SELECT * FROM messages_table WHERE status = 'sent'`);
- 
-    messageSql.then((result) => {
-
-      if (result.rows.length) {
-
-        return res.status(200).json({
-
-          status: 200,
-          data: result.rows
-        });
-      }
-      return res.status(404).json({
-
-        status: 404,
-        error: 'No email found!',
-
-      });
-    }).catch(error => res.status(500).json({
-
-      status: 500,
-      error: `Internal server error ${error}`,
-
-    }));
+  const testendpoint = (req, res) => {
+    return res.status(200).send({
+      message: 'successfully hit this endpoint'
+    });
   };
+    
+//   const sentMessage = (req, res) => {
+//     console.log('>>>>>>>sent message here<<<<<<<<<<<<');
+
+//     const ownerIt = Database.executeQuery(`SELECT * FROM messages_table WHERE senderid='${req.body.userId}'`);
+
+//     ownerIt.then((result) =>{
+//         console.log('>>>>>>>>><<<<<<<ownerit/??????????');
+//         if(result.rows ==0) { return res.status(404).send('No sent email found with given user id')}});
+
+    
+//     const messageSql = Database.executeQuery(`SELECT * FROM messages_table WHERE status='sent'`);
+ 
+//     messageSql.then((result) => {
+//  console.log("Result", result);
+//       if (result.rows.length) {
+
+//         return res.status(200).json({
+
+//           status: 200,
+//           data: result.rows
+//         });
+//       }
+//       return res.status(404).json({
+
+//         status: 404,
+//         error: 'No email found!',
+
+//       });
+//     }).catch(error => 
+//       res.status(500).json({
+
+//       status: 500,
+//       error: `Internal server error ${error}`,
+
+//     }));
+//   };
 
 
 
@@ -197,5 +201,5 @@ const deleteEmail= async (req, res) => {
   }
 
     export{
-        getMessages,createMessage,specificEmail,sentMessage,unreadMessage,deleteEmail
+        getMessages, testendpoint, createMessage,specificEmail,unreadMessage,deleteEmail
       };
