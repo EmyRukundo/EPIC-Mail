@@ -7,7 +7,8 @@ const messageValidate = {
         messages: joi.string().required(),
         receiverid: joi.number().integer().required(),
         parentmessageid:joi.number().integer().required(),
-        status: joi.string().required(),
+        status:joi.string().alphanum().valid('read','draft','sent')
+        .required(),
     });
     const { value, error } = joi.validate(req.body, schema);
     if (error && error.details) {

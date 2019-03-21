@@ -88,7 +88,7 @@ class Database {
         parentMessageId INTEGER NOT NULL,
         status VARCHAR(30) NOT NULL,
         groupid SERIAL NOT NULL, 
-        FOREIGN KEY (groupid) REFERENCES user_table(id) ON DELETE CASCADE
+        FOREIGN KEY (groupid) REFERENCES group_table(id) ON DELETE CASCADE
     );  
     `;
     this.initializeDb();

@@ -22,7 +22,7 @@ const groupValidate = {
     const schema = joi.object().keys({
         
       userid: joi.number().integer().required(),
-      userole:joi.string().alphanum().valid('role')
+      userole:joi.string().alphanum().valid('user')
       .required(),
         
     });
@@ -42,7 +42,26 @@ const groupValidate = {
              
   subject: joi.string().required(),
   message: joi.string().required(), 
-  status: joi.string().required(),
+  parentMessageId: joi.number().integer().required(),
+  groupid: joi.number().integer().required(),
+  status:joi.string().alphanum().valid('read','draft','sent').required(),
+
+    });
+    const { error } = joi.validate(req.body, schema);
+    if (error && error.details) {
+      
+      return res.status(400).send({
+        status: 400,
+        error: error.details[0].message.replace(/[$\/\\#,+()$~%.'":*<>{}]/g,''),
+      });
+    }
+    next();
+  },
+
+  async validateupdate(req, res, next) {
+    const schema = joi.object().keys({
+             
+  name: joi.string().required(),
 
     });
     const { error } = joi.validate(req.body, schema);

@@ -1,5 +1,5 @@
 import Database from '../db/db-connection';
-
+import jsonWebToken from 'jsonwebtoken';
 //@@ Create group
 
 const createGroup = (req, res) => {
@@ -29,10 +29,11 @@ const newGroup=[
 
 };
  
-  //@get all groups, user belongs too
+  //@get all groups owned by given user 
   const getGroups = (req, res) => {
    
-  const groupSql = Database.executeQuery(`SELECT * FROM group_table WHERE userid = '${req.body.userId}'`);
+  
+  const groupSql = Database.executeQuery(`SELECT * FROM group_table WHERE ownerid='${req.body.userId}'`);
     
   groupSql.then((result) => {
 
@@ -59,11 +60,11 @@ const newGroup=[
 };
 
 
-  //@GET SPECIFIC GROUP
+  //@GET all GROUPS, i AM AN ADMIN
 
   const specificGroup = (req, res) => {
 
-    const sql = `SELECT * FROM members_table WHERE groupid = '${req.params.id}' and userid='${req.body.userId}' `;
+    const sql = `SELECT * FROM group_table WHERE ownerid ='${req.body.userId}' `;
 
     const groupSql = Database.executeQuery(sql);
 
@@ -96,8 +97,6 @@ const newGroup=[
 //@UPDATE GROUP Name
 
 const updateGroup = (req, res) => {
-
-
 
     const checkGroupSql = `SELECT * FROM group_table WHERE ownerid='${req.body.userId}'`;
     const isAvailable = Database.executeQuery(checkGroupSql);
@@ -141,28 +140,21 @@ const updateGroup = (req, res) => {
 const deleteGroup = async (req, res) => {
 
     
-      const tableAv = Database.executeQuery(`SELECT * FROM group_table WHERE id='${req.body.userId}'`);
+      const tableAv = Database.executeQuery(`SELECT * FROM group_table WHERE id='${req.params.id}' and ownerid='${req.body.userId}' `);
 
       tableAv.then((istableAv) =>{
           
-          if(istableAv.rows ==0) { return res.status(404).send('Table does not exist')}});
+          if(istableAv.rows ==0) { return res.status(404).send('group does not exist')}});
     
-      const isAvailable = Database.executeQuery(`SELECT * FROM group_table WHERE ownerid='${userId}'`);
-      
-      isAvailable.then((isValid) => {
-        if(!isValid) res.status(404).send('The Email with the given ID was not found');
-        if (isValid.rows) {
-          if (isValid.rows.length) {
+  
              
   
-    Database.executeQuery(`DELETE FROM group_table WHERE id = '${req.params.id}' and ownerid='${userId}' RETURNING *`).then((result) => {
+    Database.executeQuery(`DELETE FROM group_table WHERE id = '${req.params.id}' and ownerid='${req.body.userId}' RETURNING *`).then((result) => {
       
       res.status(200).json({ status:200,message: "Deleted group successful" });
       
     }).catch(error => res.status(500).json({ status: 500, error: `Server error ${error}` }));
-  };
-        }
-  })
+
   }
 
   //@@ ADD USER TO THE GROUP
@@ -170,20 +162,16 @@ const deleteGroup = async (req, res) => {
 const groupMember = (req, res) => {
 
   
-  const tableAv = Database.executeQuery(`SELECT * FROM group_table WHERE id='${req.params.groupid}'`);
+  const tableAv = Database.executeQuery(`SELECT * FROM group_table WHERE id='${req.params.id}' and ownerid='${req.body.userId}'`);
 
   tableAv.then((istableAv) =>{
       
-      if(istableAv.rows ==0) { return res.status(404).send('Table does not exist')}});
+      if(istableAv.rows ==0) { return res.status(404).send('group does not exist')}});
 
-
-  const checkGroupSql = `SELECT * FROM group_table WHERE ownerid='${req.body.userId}'`;
-  
-  const isAvailable = Database.executeQuery(checkGroupSql);
 
      
           const member=[
-            req.params.groupid,
+            req.params.id,
             req.body.userid,
             req.body.userole
             
@@ -203,8 +191,8 @@ const groupMember = (req, res) => {
                   });
                 }
               }
-              return res.status(404).json({
-                status: 404,
+              return res.status(400).json({
+                status: 400,
                 error: 'User does not exist ',
               });
             }).catch(error => res.status(500).json({
@@ -244,7 +232,7 @@ const deleteMember = async (req, res) => {
 const emailGroup = (req, res) => {
 
   
-  const memberSql = Database.executeQuery(`SELECT * FROM members_table WHERE userid='${req.body.userId}'and groupid='${req.params.id}'`);
+  const memberSql = Database.executeQuery(`SELECT * FROM members_table WHERE userid='${req.body.userId}' and groupid='${req.params.id}'`);
 
   memberSql.then((isgroupAv) =>{
       
@@ -253,13 +241,13 @@ const emailGroup = (req, res) => {
   
           const newEmail = [
             new Date(),
-            result.subject,
-            result.message,
-            result.parentMessageId,
-            result.status,
+            req.body.subject,
+            req.body.message,
+            req.body.parentMessageId,
+            req.body.status,
             req.params.id
           ];
-          const sql = 'INSERT INTO emailgroup_table (created_on,subject,message,parentMessageId,status,groupid) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *';
+          const sql ='INSERT INTO emailgroup_table(created_on,subject,message,parentMessageId,status,groupid) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *';
           const emailSql =Database.executeQuery(sql, newEmail); 
             emailSql.then((sendEmailResult) => {
 

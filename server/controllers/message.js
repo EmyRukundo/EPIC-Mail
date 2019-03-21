@@ -91,48 +91,42 @@ const getMessages = async (req, res) => {
 
   
   //@get a sent message
-  const testendpoint = (req, res) => {
-    return res.status(200).send({
-      message: 'successfully hit this endpoint'
-    });
-  };
     
-//   const sentMessage = (req, res) => {
-//     console.log('>>>>>>>sent message here<<<<<<<<<<<<');
+  const sentMessage = (req, res) => {
 
-//     const ownerIt = Database.executeQuery(`SELECT * FROM messages_table WHERE senderid='${req.body.userId}'`);
+    const ownerIt = Database.executeQuery(`SELECT * FROM messages_table WHERE senderid='${req.body.userId}'`);
 
-//     ownerIt.then((result) =>{
-//         console.log('>>>>>>>>><<<<<<<ownerit/??????????');
-//         if(result.rows ==0) { return res.status(404).send('No sent email found with given user id')}});
+    ownerIt.then((result) =>{
+        
+        if(result.rows ==0) { return res.status(404).send('No sent email found with given user id')}});
 
     
-//     const messageSql = Database.executeQuery(`SELECT * FROM messages_table WHERE status='sent'`);
+    const messageSql = Database.executeQuery(`SELECT * FROM messages_table WHERE status='sent'`);
  
-//     messageSql.then((result) => {
-//  console.log("Result", result);
-//       if (result.rows.length) {
+    messageSql.then((result) => {
 
-//         return res.status(200).json({
+      if (result.rows.length) {
 
-//           status: 200,
-//           data: result.rows
-//         });
-//       }
-//       return res.status(404).json({
+        return res.status(200).json({
 
-//         status: 404,
-//         error: 'No email found!',
+          status: 200,
+          data: result.rows
+        });
+      }
+      return res.status(404).json({
 
-//       });
-//     }).catch(error => 
-//       res.status(500).json({
+        status: 404,
+        error: 'No email found!',
 
-//       status: 500,
-//       error: `Internal server error ${error}`,
+      });
+    }).catch(error => 
+      res.status(500).json({
 
-//     }));
-//   };
+      status: 500,
+      error: `Internal server error ${error}`,
+
+    }));
+  };
 
 
 
@@ -194,12 +188,12 @@ const deleteEmail= async (req, res) => {
   
     Database.executeQuery(`DELETE FROM messages_table WHERE id = '${req.params.id}' RETURNING *`).then((result) => {
       
-      res.status(202).json({ status:202,message: "Message Deleted  successful" });
+      res.status(200).json({ status:200,message: "Message Deleted  successful" });
       
     }).catch(error => res.status(500).json({ status: 500, error: `Server error ${error}` }));
 
   }
 
     export{
-        getMessages, testendpoint, createMessage,specificEmail,unreadMessage,deleteEmail
+        getMessages,createMessage,specificEmail,sentMessage,unreadMessage,deleteEmail
       };
