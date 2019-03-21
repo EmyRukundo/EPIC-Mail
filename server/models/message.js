@@ -1,8 +1,8 @@
-import Database from '../db/connection';
+import Database from '../db/db-connection';
 
 const selectFrom = async (tableName, id = false) => {
   
-  const sql = `SELECT * FROM user_table;`
+  const sql = `SELECT * FROM messages_table;`
   return Database.executeQuery(sql);
 };
 

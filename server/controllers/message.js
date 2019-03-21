@@ -1,22 +1,25 @@
 import joi from 'joi';
 import jsonWebToken from 'jsonwebtoken';
 import Database from '../db/db-connection';
+import selectFrom  from '../models/message';
 import Validation from '../helpers/validations';
 import uuid from 'uuid';
 
-//@@get all messages
+// @@get all messages
 
-// const getMessages = async (req, res) => {
- 
-// res.status(200).json({    
-//           status: 200,
-//           data:await messages(),
-//   });
-// }
+
+
+const getMessages = async (req, res) => {
+  selectFrom('messages_table').then((users) => {
+    if (users.rows) {
+      return res.status(200).json({ status: 200, data: users.rows });
+    }
+  }).catch(error => res.status(500).json({ status: 500, error: `Internal server error : ${error}` }));
+};
+
 
   //@@Create message
 
-  
   const createMessage = (req, res) => {
    
       const newMessage = [
@@ -93,9 +96,9 @@ import uuid from 'uuid';
     
     const sentMessage = (req, res) => {
           
-
-        const sql = "SELECT * FROM messages_table WHERE status =$1"; 
+        const sql = "SELECT * FROM messages_table WHERE status='sent'"; 
         const messageSql = Database.executeQuery(sql);
+        
         console.log(messageSql.rows);
         messageSql.then((result) => {
           console.log(result.rows);
@@ -111,10 +114,15 @@ import uuid from 'uuid';
             status: 400,
             error: 'No sent email found',
           });
-        }).catch(error => res.status(500).json({
-          status: 500,
-          error: `Internal server error ${error}`,
-        }));
+        }).catch(error =>{
+            console.log(error);
+            res.status(500).json({
+                status: 500,
+                error: `Internal server error ${error}`,
+              })
+        }
+         
+        );
       };
 
 
@@ -160,62 +168,33 @@ const unreadMessage = (req, res) => {
     }));
   };
 
+  //@@ delete a specific email
 
- //@deleteEmail
+const deleteEmail= async (req, res) => {
+
+   
+      
+    const tableAv = Database.executeQuery(`SELECT * FROM messages_table WHERE id='${req.params.id}'`);
+
+      tableAv.then((istableAv) =>{
+          
+          if(istableAv.rows ==0) { return res.status(404).send('message does not exist')}});
+
+    const ownerIt = Database.executeQuery(`SELECT * FROM messages_table WHERE senderid='${req.body.userId}'`);
+
+    ownerIt.then((result) =>{
+        
+        if(result.rows ==0) { return res.status(404).send('No email found with given user id')}});
+    
   
- const deleteEmail = async (req, res) => {
-  let token = 0;
-  let decodedToken = '';
-  let userId = '';
-  if (req.headers.authorization) {
-    token = req.headers.authorization.split(' ')[1];
-    decodedToken = jsonWebToken.verify(token, 'secret');
-    userId = decodedToken.user[0].id;
-  } else {
-    return res.status(403).json({
-      status: 403,
-      error:" Oops,you are not authorised!!",
-    });
+    Database.executeQuery(`DELETE FROM messages_table WHERE id = '${req.params.id}' RETURNING *`).then((result) => {
+      
+      res.status(202).json({ status:202,message: "Message Deleted  successful" });
+      
+    }).catch(error => res.status(500).json({ status: 500, error: `Server error ${error}` }));
+
   }
 
-  const sql = `DELETE FROM messages_table WHERE id = '${req.params.id}' RETURNING *`;
-
-  Database.executeQuery(sql).then((result) => {
-
-    res.status(202).json({ status: 202, message: "Deleted email successful" });
-    
-    
-
-  }).catch(error => res.status(500).json({ status: 500, error: `Server error ${error}` }));
-};
-
-
-// const deleteEmail = (req, res) => {
-
-//     const id = req.params.id;
-//     Database.executeQuery("SELECT * FROM messages_table WHERE id=$1", [id],
-//       (error, result) => {
-//         if (error) {
-//         //console.log(error);
-//           return res.status(400).json(error);
-//         }
-//         if (result.rows.length === 0) {
-//           return res.status(400).json({ error: "Sorry! no message found on this id." });
-//         }
-//         //@delete if it is available
-//         pool.executeQuery("DELETE FROM messages_table WHERE id=$1", [id],
-//           (er, messageSql) => {
-//             if (er) {
-//               return res.status(500).json(er);
-//             }
-//             if (!messageSql) {
-//               return res.status(500).json({ error: "something went wrong try again later" });
-//             }
-//             return res.status(200).json({ success: true, message: "you deleted a message successfully." });
-//           });
-//       });
-//   };
-
     export{
-        createMessage,specificEmail,sentMessage,unreadMessage,deleteEmail
+        getMessages,createMessage,specificEmail,sentMessage,unreadMessage,deleteEmail
       };
