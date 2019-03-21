@@ -2,6 +2,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import userRouter from './server/routes/users';
 import groupsRouter from './server/routes/groups';
+
+
+import messageRouter from './server/routes/message';
 import swagger from 'swagger-ui-express';
 import yamljs from 'yamljs';
 
@@ -18,6 +21,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api/v2/auth/',userRouter);
 app.use('/api/V2/groups',groupsRouter);
+app.use('/api/v2/messages',messageRouter);
+
+
+
 
 app.get('/',(req,res)=>{
 
