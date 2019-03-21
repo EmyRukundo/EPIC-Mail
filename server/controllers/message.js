@@ -94,77 +94,79 @@ const getMessages = async (req, res) => {
   
   //@get a sent message
     
-    const sentMessage = (req, res) => {
-          
-        const sql = "SELECT * FROM messages_table WHERE status='sent'"; 
-        const messageSql = Database.executeQuery(sql);
-        
-        console.log(messageSql.rows);
-        messageSql.then((result) => {
-          console.log(result.rows);
-          if (result.rows.length) {
+    
+  const sentMessage = (req, res) => {
 
-            return res.status(200).json({
-              status: 200,
-              data: result.rows,
-            });
-          }
-      
-          return res.status(404).json({
-            status: 400,
-            error: 'No sent email found',
-          });
-        }).catch(error =>{
-            console.log(error);
-            res.status(500).json({
-                status: 500,
-                error: `Internal server error ${error}`,
-              })
-        }
-         
-        );
-      };
+    const ownerIt = Database.executeQuery(`SELECT * FROM messages_table WHERE senderid='${req.body.userId}'`);
+
+    ownerIt.then((result) =>{
+        
+        if(result.rows ==0) { return res.status(404).send('No sent email found with given user id')}});
+
+    
+    const messageSql = Database.executeQuery(`SELECT * FROM messages_table WHERE status = 'sent'`);
+ 
+    messageSql.then((result) => {
+
+      if (result.rows.length) {
+
+        return res.status(200).json({
+
+          status: 200,
+          data: result.rows
+        });
+      }
+      return res.status(404).json({
+
+        status: 404,
+        error: 'No email found!',
+
+      });
+    }).catch(error => res.status(500).json({
+
+      status: 500,
+      error: `Internal server error ${error}`,
+
+    }));
+  };
+
 
 
 // @get unread Message
 
 const unreadMessage = (req, res) => {
 
-  let token = 0;
-  let decodedToken = '';
-  let userId = '';
-  if (req.headers.authorization) {
-    token = req.headers.authorization.split(' ')[1];
-    decodedToken = jsonWebToken.verify(token, 'secret');
-    userId = decodedToken.user[0].id;
-  } else {
-    return res.status(403).json({
-      status: 403,
-      error:" Oops,you are not authorised!!",
-    });
-  }
+ 
+    const ownerIt = Database.executeQuery(`SELECT * FROM messages_table WHERE senderid='${req.body.userId}'`);
 
-    const sql =" SELECT * FROM messages_table WHERE status LIKE 's%' ";
-    const messageSql = Database.executeQuery(sql);
+    ownerIt.then((result) =>{
+        
+        if(result.rows ==0) { return res.status(404).send('No unread email found with given user id')}});
 
-   
+    
+    const messageSql = Database.executeQuery(`SELECT * FROM messages_table WHERE status = 'unread'`);
+ 
     messageSql.then((result) => {
-      console.log(result);
-      if (result) {
-        console.log(result);
-        return res.status(200).send({
+
+      if (result.rows.length) {
+
+        return res.status(200).json({
+
           status: 200,
-          data: result.rows,
+          data: result.rows
         });
       }
-      console.log(result);
       return res.status(404).json({
-        status: 400,
-        error: 'No unread email found',
+
+        status: 404,
+        error: 'No email found!',
+
       });
     }).catch(error => res.status(500).json({
+
       status: 500,
       error: `Internal server error ${error}`,
+
     }));
   };
 

@@ -9,8 +9,8 @@ const router = express.Router();
 
 router.get('/:id',verifyToken,specificEmail);
 router.get('/',verifyToken,getMessages);
-router.get('/unread',unreadMessage);
-router.get('/sent',sentMessage);
+router.get('/unread',verifyToken,unreadMessage);
+router.get('/sent',verifyToken,sentMessage);
 router.post('/',validate,verifyToken,createMessage);
 router.delete('/:id/delete',verifyToken,deleteEmail);
 
