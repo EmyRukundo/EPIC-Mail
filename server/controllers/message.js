@@ -175,7 +175,6 @@ const unreadMessage = (req, res) => {
 const deleteEmail= async (req, res) => {
 
    
-      
     const tableAv = Database.executeQuery(`SELECT * FROM messages_table WHERE id='${req.params.id}'`);
 
       tableAv.then((istableAv) =>{
