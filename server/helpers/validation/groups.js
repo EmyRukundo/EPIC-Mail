@@ -22,7 +22,8 @@ const groupValidate = {
     const schema = joi.object().keys({
         
       userid: joi.number().integer().required(),
-      userole: joi.string().required(),
+      userole:joi.string().alphanum().valid('role')
+      .required(),
         
     });
     const { error } = joi.validate(req.body, schema);
@@ -55,7 +56,5 @@ const groupValidate = {
     next();
   },
 
-
-  
 };
 export default groupValidate;
