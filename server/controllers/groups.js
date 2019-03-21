@@ -1,54 +1,38 @@
-import jsonWebToken from 'jsonwebtoken';
 import Database from '../db/db-connection';
-import verifyToken from '../middleware/authenticate';
 
+//@@ Create group
 
 const createGroup = (req, res) => {
+  
+const newGroup=[
+  req.body.name,
+  req.body.userId
+]
+  const sql = 'INSERT INTO group_table(name,ownerid) VALUES ($1,$2) RETURNING *';
+  const groupSql =Database.executeQuery(sql,newGroup);
+  
+  groupSql.then((groupResult) => {
+    if (groupResult.rows.length!==0) {
+      return res.status(201).json({
+        status: 201,
+        data: groupResult.rows,
+      });
+    }
+    return res.status(400).json({
+      status: 400,
+      error: 'Group could not be created',
+    });
+  }).catch(error => res.status(500).json({
+    status: 500,
+    error: `Internal server error ${error}`,
+  }));
 
-      const newGroup = [
-       
-        req.body.name,
-        req.body.userId,
-    
-      ];
-      const sql = 'INSERT INTO group_table (name,ownerid) VALUES ($1,$2) RETURNING *';
-      const groupSql =Database.executeQuery(sql, newGroup);
-      
-      groupSql.then((groupResult) => {
-        if (groupResult.rows.length!==0) {
-          return res.status(201).json({
-            status: 201,
-            data: groupResult.rows,
-          });
-        }
-        return res.status(500).json({
-          status: 500,
-          error: 'Group could not be created',
-        });
-      }).catch(error => res.status(500).json({
-        status: 500,
-        error: `Internal server error ${error}`,
-      }));
+};
  
-  };
- 
-  //@get all groups owned by given user 
+  //@get all groups, user belongs too
   const getGroups = (req, res) => {
    
-    let token = 0;
-  let decodedToken = '';
-  let userId = '';
-  if (req.headers.authorization) {
-    token = req.headers.authorization.split(' ')[1];
-    decodedToken = jsonWebToken.verify(token, 'secret');
-    userId = decodedToken.user[0].id;
-  } else {
-    return res.status(403).json({
-      status: 403,
-      error:"you are not authorised to get any group",
-    });
-  }
-  const groupSql = Database.executeQuery(`SELECT * FROM group_table WHERE ownerid = '${userId}'`);
+  const groupSql = Database.executeQuery(`SELECT * FROM group_table WHERE userid = '${req.body.userId}'`);
     
   groupSql.then((result) => {
 
@@ -79,7 +63,7 @@ const createGroup = (req, res) => {
 
   const specificGroup = (req, res) => {
 
-    const sql = `SELECT * FROM group_table WHERE id = '${req.params.id}'`;
+    const sql = `SELECT * FROM members_table WHERE groupid = '${req.params.id}' and userid='${req.body.userId}' `;
 
     const groupSql = Database.executeQuery(sql);
 
@@ -113,21 +97,9 @@ const createGroup = (req, res) => {
 
 const updateGroup = (req, res) => {
 
-    let token = 0;
-    let decodedToken = '';
-    let userId = '';
-    if (req.headers.authorization) {
-      token = req.headers.authorization.split(' ')[1];
-      decodedToken = jsonWebToken.verify(token, 'secret');
-      userId = decodedToken.user[0].id;
-    } else {
-      return res.status(403).json({
-        status: 403,
-        error:"Sorry,you do not have a group, first create it!!",
-      });
-    }
 
-    const checkGroupSql = `SELECT * FROM group_table WHERE ownerid='${userId}'`;
+
+    const checkGroupSql = `SELECT * FROM group_table WHERE ownerid='${req.body.userId}'`;
     const isAvailable = Database.executeQuery(checkGroupSql);
     isAvailable.then((isValid) => {
       if (isValid.rows) {
@@ -143,16 +115,16 @@ const updateGroup = (req, res) => {
 
                   if (updatenameResult.rows.length) {
 
-                    return res.status(201).json({
-                      status: 201,
+                    return res.status(200).json({
+                      status: 200,
                       data: updatenameResult.rows,
                     });
                   }
                 }
   
-                return res.status(400).json({
-                  status: 400,
-                  error: 'You do not own this group ',
+                return res.status(404).json({
+                  status: 404,
+                  error: 'No group found ',
                 });
               }).catch(error => res.status(500).json({
                 status: 500,
@@ -168,20 +140,8 @@ const updateGroup = (req, res) => {
 
 const deleteGroup = async (req, res) => {
 
-    let token = 0;
-      let decodedToken = '';
-      let userId = '';
-      if (req.headers.authorization) {
-        token = req.headers.authorization.split(' ')[1];
-        decodedToken = jsonWebToken.verify(token, 'secret');
-        userId = decodedToken.user[0].id;
-      } else {
-        return res.status(403).json({
-          status: 403,
-          error:" Oops,you are not authorised!!",
-        });
-      }
-      const tableAv = Database.executeQuery(`SELECT * FROM group_table WHERE id='${req.params.id}'`);
+    
+      const tableAv = Database.executeQuery(`SELECT * FROM group_table WHERE id='${req.body.userId}'`);
 
       tableAv.then((istableAv) =>{
           
@@ -197,7 +157,7 @@ const deleteGroup = async (req, res) => {
   
     Database.executeQuery(`DELETE FROM group_table WHERE id = '${req.params.id}' and ownerid='${userId}' RETURNING *`).then((result) => {
       
-      res.status(202).json({ status:202,message: "Deleted group successful" });
+      res.status(200).json({ status:200,message: "Deleted group successful" });
       
     }).catch(error => res.status(500).json({ status: 500, error: `Server error ${error}` }));
   };
@@ -209,20 +169,7 @@ const deleteGroup = async (req, res) => {
 
 const groupMember = (req, res) => {
 
-  let token = 0;
-  let decodedToken = '';
-  let userId = '';
-  if (req.headers.authorization) {
-    token = req.headers.authorization.split(' ')[1];
-    decodedToken = jsonWebToken.verify(token, 'secret');
-    userId = decodedToken.user[0].id;
-  } else {
-    return res.status(403).json({
-      status: 403,
-      error:"First create account!",
-    });
-  }
-
+  
   const tableAv = Database.executeQuery(`SELECT * FROM group_table WHERE id='${req.params.groupid}'`);
 
   tableAv.then((istableAv) =>{
@@ -230,7 +177,7 @@ const groupMember = (req, res) => {
       if(istableAv.rows ==0) { return res.status(404).send('Table does not exist')}});
 
 
-  const checkGroupSql = `SELECT * FROM group_table WHERE ownerid='${userId}'`;
+  const checkGroupSql = `SELECT * FROM group_table WHERE ownerid='${req.body.userId}'`;
   
   const isAvailable = Database.executeQuery(checkGroupSql);
 
@@ -241,14 +188,13 @@ const groupMember = (req, res) => {
             req.body.userole
             
           ]
-          
-             
+                  
             const addMember = Database.executeQuery('INSERT INTO members_table(groupid,userid,userole) VALUES ($1,$2,$3) RETURNING *',member);
-            console.log(addMember.rows);
+            
             addMember.then((memberResult) => {
-        console.log(memberResult.rows);
+        
               if (memberResult.rows) {
-                console.log(memberResult.rows);
+               
                 if (memberResult.rows.length) {
 
                   return res.status(201).json({
@@ -257,8 +203,8 @@ const groupMember = (req, res) => {
                   });
                 }
               }
-              return res.status(400).json({
-                status: 400,
+              return res.status(404).json({
+                status: 404,
                 error: 'User does not exist ',
               });
             }).catch(error => res.status(500).json({
@@ -268,9 +214,76 @@ const groupMember = (req, res) => {
         
 };
 
+// @DELETE A MEMBER FROM A SPECIFIC GROUP
+
+const deleteMember = async (req, res) => {
 
 
+  const memberSql = Database.executeQuery(`SELECT * FROM group_table WHERE ownerid='${req.body.userId}'and id='${req.params.groupid}'`);
+
+  memberSql.then((isgroupAv) =>{
+      
+      if(isgroupAv.rows ==0) { return res.status(404).send('Group does not exist')}});
+
+
+      const deleteSql = Database.executeQuery(`DELETE FROM members_table WHERE groupid='${req.params.groupid}' and userid='${req.params.id}' RETURNING *`);
+
+      deleteSql.then((result) =>{
+          
+          if(result.rows==0) { 
+            res.status(404).json({ status:404,message: "The user with given ID do not exist" });}else{
+              return res.status(200).send({ status:200, message: "Deleted user successful" })
+            }
+          });
+
+
+}
+
+//@@ send email to the group
+
+const emailGroup = (req, res) => {
+
+  
+  const memberSql = Database.executeQuery(`SELECT * FROM members_table WHERE userid='${req.body.userId}'and groupid='${req.params.id}'`);
+
+  memberSql.then((isgroupAv) =>{
+      
+      if(isgroupAv.rows ==0) { return res.status(404).send('Group does not exist')}});
+
+  
+          const newEmail = [
+            new Date(),
+            result.subject,
+            result.message,
+            result.parentMessageId,
+            result.status,
+            req.params.id
+          ];
+          const sql = 'INSERT INTO emailgroup_table (created_on,subject,message,parentMessageId,status,groupid) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *';
+          const emailSql =Database.executeQuery(sql, newEmail); 
+            emailSql.then((sendEmailResult) => {
+
+              if (sendEmailResult.rows) {
+                   
+                if (sendEmailResult.rows) {
+                  console.log(sendEmailResult.rows);
+                  return res.status(201).json({
+                    status: 201,
+                    data: sendEmailResult.rows,
+                  });
+                }
+              }
+              return res.status(500).json({
+                status: 500,
+                error: `Internal server error ${error}`,
+              });
+            }).catch(error => res.status(500).json({
+              status: 500,
+              error: `Internal server error ${error}`,
+            }));
+         
+};
 
   export {
-      createGroup,getGroups,updateGroup,specificGroup,deleteGroup,groupMember
+      createGroup,getGroups,updateGroup,specificGroup,deleteGroup,groupMember,deleteMember,emailGroup
     };

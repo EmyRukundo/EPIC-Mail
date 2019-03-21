@@ -62,9 +62,9 @@ class Database {
     )`;
     this.groupTable = `
     CREATE TABLE IF NOT EXISTS group_table (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(128) NOT NULL,
-        ownerid SERIAL REFERENCES user_table (id) ON DELETE CASCADE
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(128) NOT NULL,
+      ownerid SERIAL REFERENCES user_table (id) ON DELETE CASCADE
     );
     `;
 
@@ -73,7 +73,8 @@ class Database {
         id SERIAL PRIMARY KEY,
         groupid VARCHAR(128) NOT NULL,
         userid VARCHAR(128) NOT NULL,
-        userole VARCHAR(128) NOT NULL
+        userole VARCHAR(128) NOT NULL,
+        FOREIGN KEY (groupid) REFERENCES group_table(id) ON DELETE CASCADE
     );
     `;
     this.emailgroupTable = `

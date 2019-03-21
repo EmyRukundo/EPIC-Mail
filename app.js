@@ -21,7 +21,7 @@ app.use('/api/V2/groups',groupsRouter);
 
 app.get('/',(req,res)=>{
 
-	res.status(202).send('Welcome to the EPIC Mail web app');
+	res.status(200).send('Welcome to the EPIC Mail web app');
 });
 
 app.get('/*',(req,res)=>{
@@ -29,8 +29,6 @@ app.get('/*',(req,res)=>{
 	res.status(404).send('This is not the page you are looking for');
 
 });
-
-
 
 app.listen(port, ()=> console.log(`Listening on port ${port}...`));
 

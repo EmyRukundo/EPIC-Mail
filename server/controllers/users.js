@@ -17,7 +17,7 @@ import Helper from '../helpers/helpers';
          if(result.rows.length){
              return res.status(400).json({
                  status:400,
-                 error: "The email is already exist",
+                 error: "The User is already exist",
              })
          }
 
@@ -26,9 +26,9 @@ import Helper from '../helpers/helpers';
     const hashPassword = Helper.hashPassword(req.body.password);
     
       const newUser = [
-        req.body.email,
-        req.body.firstname,
-        req.body.lastname,   
+        email,
+        firstname,
+        lastname,   
         hashPassword
     
       ];
@@ -68,11 +68,11 @@ import Helper from '../helpers/helpers';
     const user = Database.executeQuery(`SELECT * FROM user_table WHERE email = '${userAccount.email}'`);
  
     user.then((userResult) => {
-        console.log(userResult.rows);
+        
       if (userResult.rows.length){
         if (Helper.comparePassword(userAccount.password, userResult.rows[0].password)) {
             const token = jsonWebToken.sign({ user: userResult.rows }, process.env.SECRETKEY);
-            console.log("No error here");
+            
             return res.status(200).json({ 
                 status: 200, 
                 data: token 

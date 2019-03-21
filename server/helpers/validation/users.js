@@ -1,7 +1,9 @@
 import joi from 'joi';
 
 const userValidate = {
+  
   async validate(req, res, next) {
+  
     const schema = joi.object().keys({
         email: joi.string().email().required(),
         firstname: joi.string().regex(/^[a-zA-Z]/).min(2).required(),
