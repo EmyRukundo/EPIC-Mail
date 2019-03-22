@@ -21,7 +21,7 @@ const groupValidate = {
   async validateMember(req, res, next) {
     const schema = joi.object().keys({
         
-      userid: joi.number().integer().required(),
+      userid: joi.string().required(), 
       userole:joi.string().alphanum().valid('user')
       .required(),
         
