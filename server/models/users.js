@@ -1,4 +1,4 @@
-import Database from '../db/connection';
+import Database from '../db/db-connection';
 
 const selectFrom = async (tableName, id = false) => {
   
