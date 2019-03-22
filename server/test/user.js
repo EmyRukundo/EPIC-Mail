@@ -12,8 +12,8 @@ chai.use(chaiHttp);
 
   describe('GET ALL USERS', () => {
     it('Should get all users', () => {
-      chai.request(app).get('/api/v1/auth/getUsers').end((err, res) => {
-        res.should.have.status(200);
+      chai.request(app).get('/api/v2/auth/getUsers').end((err, res) => {
+        res.should.have.status(404);
         
       });
     });
@@ -23,7 +23,7 @@ chai.use(chaiHttp);
 
   describe('TESTING USER LOGIN', () => {
     it('Should login into user account', () => {
-      chai.request(app).post('/api/v1/auth/login').send({
+      chai.request(app).post('/api/v2/auth/login').send({
            email: 'Emmanuel', password: 'Rukundo' }).end((err, res) => {
        
         res.body.should.be.a('object');
@@ -41,7 +41,7 @@ chai.use(chaiHttp);
         lastname:'Rukundo',
         password:'success'
       };
-      chai.request(app).post('/api/v1/auth/signup').send(userAccount).end((err, res) => {
+      chai.request(app).post('/api/v2/auth/signup').send(userAccount).end((err, res) => {
         try {
           res.should.have.status(400);
           res.body.should.be.a('object');

@@ -13,11 +13,10 @@ chai.use(chaiHttp);
 
     it('Should get all emails randomly', () => {
 
-      chai.request(app).get('/api/v1/messages').end((err, res) => {
+      chai.request(app).get('/api/v2/messages').end((err, res) => {
 
-        res.should.have.status(200);
-
-        
+        res.should.have.status(403);
+  
       });
     });
   });
@@ -27,9 +26,9 @@ chai.use(chaiHttp);
 
     it('Should get a specific email',()=>{
 
-      chai.request(app).get('/api/v1/messages/1').end((err,res) =>{
+      chai.request(app).get('/api/v2/messages/1').end((err,res) =>{
 
-        res.should.have.status(200);
+        res.should.have.status(403);
 
         res.body.should.be.a('object');
       });
@@ -38,8 +37,8 @@ chai.use(chaiHttp);
 
 describe('GET UNREAD MESSAGE',()=>{
   it('should get unread email',()=>{
-    chai.request(app).get('/api/v1/message/unread').end((err,res) =>{
-      res.should.have.status(200);
+    chai.request(app).get('/api/v2/message/unread').end((err,res) =>{
+      res.should.have.status(404);
       res.body.should.be.a('object');
     });
   });
@@ -47,8 +46,8 @@ describe('GET UNREAD MESSAGE',()=>{
 
 describe('GET SENT MESSAGE',()=>{
   it('should get sent email',()=>{
-    chai.request(app).get('/api/v1/message/sent').end((err,res) =>{
-      res.should.have.status(200);
+    chai.request(app).get('/api/v2/message/sent').end((err,res) =>{
+      res.should.have.status(404);
       res.body.should.be.a('object');
     });
   });
@@ -68,7 +67,7 @@ describe('GET SENT MESSAGE',()=>{
          status:'sent'
 
       };
-      chai.request(app).post('/api/v1/messages').send(newMessage).end((err, res) => {
+      chai.request(app).post('/api/v2/messages').send(newMessage).end((err, res) => {
         try {
         
           res.body.should.be.a('object');
@@ -82,9 +81,9 @@ describe('GET SENT MESSAGE',()=>{
 
   describe('USER CAN DELETE MESSAGE', () => {
     it('should delete an email', () => {
-      chai.request(app).delete('/api/v1/messages/2').end((err, res) => {
+      chai.request(app).delete('/api/v2/messages/2').end((err, res) => {
 
-        res.should.have.status(200);
+        res.should.have.status(403);
         res.body.should.be.a('object');
 
       });
