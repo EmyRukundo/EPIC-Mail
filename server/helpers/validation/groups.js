@@ -39,7 +39,6 @@ const groupValidate = {
 
   async validateEmail(req, res, next) {
     const schema = joi.object().keys({
-             
   subject: joi.string().required(),
   message: joi.string().required(), 
   parentMessageId: joi.number().integer().required(),

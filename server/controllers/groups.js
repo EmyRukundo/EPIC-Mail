@@ -64,7 +64,22 @@ const newGroup=[
 
   const specificGroup = (req, res) => {
 
-    const sql = `SELECT * FROM group_table WHERE ownerid ='${req.body.userId}' `;
+    let token = 0;
+    let decodedToken = '';
+    let userId = '';
+    if (req.headers.authorization) {
+      token = req.headers.authorization.split(' ')[1];
+      decodedToken = jsonWebToken.verify(token, 'secret');
+      userId = decodedToken.user[0].id;
+    } else {
+      return res.status(403).json({
+        status: 403,
+        error:"Login in your account first",
+      });
+    }
+
+
+    const sql = `SELECT * FROM group_table WHERE ownerid ='${userId}' `;
 
     const groupSql = Database.executeQuery(sql);
 
@@ -98,7 +113,22 @@ const newGroup=[
 
 const updateGroup = (req, res) => {
 
-    const checkGroupSql = `SELECT * FROM group_table WHERE ownerid='${req.body.userId}'`;
+  let token = 0;
+  let decodedToken = '';
+  let userId = '';
+  if (req.headers.authorization) {
+    token = req.headers.authorization.split(' ')[1];
+    decodedToken = jsonWebToken.verify(token, 'secret');
+    userId = decodedToken.user[0].id;
+  } else {
+    return res.status(403).json({
+      status: 403,
+      error:"Login in your account first",
+    });
+  }
+
+
+    const checkGroupSql = `SELECT * FROM group_table WHERE ownerid='${userId}'`;
     const isAvailable = Database.executeQuery(checkGroupSql);
     isAvailable.then((isValid) => {
       if (isValid.rows) {
@@ -138,9 +168,23 @@ const updateGroup = (req, res) => {
 // @@DELETE GROUP
 
 const deleteGroup = async (req, res) => {
+  let token = 0;
+  let decodedToken = '';
+  let userId = '';
+  if (req.headers.authorization) {
+    token = req.headers.authorization.split(' ')[1];
+    decodedToken = jsonWebToken.verify(token, 'secret');
+    userId = decodedToken.user[0].id;
+  } else {
+    return res.status(403).json({
+      status: 403,
+      error:"Login in your account first",
+    });
+  }
+
 
     
-      const tableAv = Database.executeQuery(`SELECT * FROM group_table WHERE id='${req.params.id}' and ownerid='${req.body.userId}' `);
+      const tableAv = Database.executeQuery(`SELECT * FROM group_table WHERE id='${req.params.id}' and ownerid='${userId}' `);
 
       tableAv.then((istableAv) =>{
           
@@ -149,7 +193,7 @@ const deleteGroup = async (req, res) => {
   
              
   
-    Database.executeQuery(`DELETE FROM group_table WHERE id = '${req.params.id}' and ownerid='${req.body.userId}' RETURNING *`).then((result) => {
+    Database.executeQuery(`DELETE FROM group_table WHERE id = '${req.params.id}' and ownerid='${userId}' RETURNING *`).then((result) => {
       
       res.status(200).json({ status:200,message: "Deleted group successful" });
       
@@ -161,8 +205,23 @@ const deleteGroup = async (req, res) => {
 
 const groupMember = (req, res) => {
 
+  let token = 0;
+  let decodedToken = '';
+  let userId = '';
+  if (req.headers.authorization) {
+    token = req.headers.authorization.split(' ')[1];
+    decodedToken = jsonWebToken.verify(token, 'secret');
+    userId = decodedToken.user[0].id;
+  } else {
+    return res.status(403).json({
+      status: 403,
+      error:"Login in your account first",
+    });
+  }
+
+
   
-  const tableAv = Database.executeQuery(`SELECT * FROM group_table WHERE id='${req.params.id}' and ownerid='${req.body.userId}'`);
+  const tableAv = Database.executeQuery(`SELECT * FROM group_table WHERE id='${req.params.id}' and ownerid='${userId}'`);
 
   tableAv.then((istableAv) =>{
       
@@ -205,9 +264,23 @@ const groupMember = (req, res) => {
 // @DELETE A MEMBER FROM A SPECIFIC GROUP
 
 const deleteMember = async (req, res) => {
+  let token = 0;
+  let decodedToken = '';
+  let userId = '';
+  if (req.headers.authorization) {
+    token = req.headers.authorization.split(' ')[1];
+    decodedToken = jsonWebToken.verify(token, 'secret');
+    userId = decodedToken.user[0].id;
+  } else {
+    return res.status(403).json({
+      status: 403,
+      error:"Login in your account first",
+    });
+  }
 
 
-  const memberSql = Database.executeQuery(`SELECT * FROM group_table WHERE ownerid='${req.body.userId}'and id='${req.params.groupid}'`);
+
+  const memberSql = Database.executeQuery(`SELECT * FROM group_table WHERE ownerid='${userId}'and id='${req.params.groupid}'`);
 
   memberSql.then((isgroupAv) =>{
       
@@ -230,9 +303,23 @@ const deleteMember = async (req, res) => {
 //@@ send email to the group
 
 const emailGroup = (req, res) => {
+  let token = 0;
+  let decodedToken = '';
+  let userId = '';
+  if (req.headers.authorization) {
+    token = req.headers.authorization.split(' ')[1];
+    decodedToken = jsonWebToken.verify(token, 'secret');
+    userId = decodedToken.user[0].id;
+  } else {
+    return res.status(403).json({
+      status: 403,
+      error:"Login in your account first",
+    });
+  }
+
 
   
-  const memberSql = Database.executeQuery(`SELECT * FROM members_table WHERE userid='${req.body.userId}' and groupid='${req.params.id}'`);
+  const memberSql = Database.executeQuery(`SELECT * FROM members_table WHERE userid='${userId}' and groupid='${req.params.id}'`);
 
   memberSql.then((isgroupAv) =>{
       
