@@ -51,27 +51,33 @@
 
 ## API ENDPOINT ROUTES
    
-| METHOD  |	ROUTES                 |	DESCRIPTION                 |
-|-------- |-----------------------|-----------------------------|        	                                  
-| POST    |	api/v1/auth/signup    |    User Registration        |	
-| POST    |	api/v1/auth/login     |	   User Login 	             |
-| GET     | api/v1/auth/getUsers  |    Retrieve all users       |
-| POST    |	api/v1/messages       |    Send Email 	             |
-| GET 	  | api/v1/messages        |   	Retrieve Received Emails | 	
-| GET 	  | api/v1/messages        |    Retrieve A Specific Email| 	
-| DELETE  |	api/v1/messages       |	   Delete A Specific Email  | 	
-| GET 	  | api/v1/message/sent    | 	  Retrieve Sent Emails     | 	
-| GET 	  | api/v1/message/unread  |	   Retrieve unRead Emails   |
- 
+| METHOD  |	ROUTES                   |	DESCRIPTION                          |
+|-------- |--------------------------|----------------------------------------|        	                                  
+| POST    |	api/v2/auth/signup       |    User Registration                   |	
+| POST    |	api/v2/auth/login        |	   User Login 	                       |
+| GET     | api/v2/auth/getUsers     |    Retrieve all users                  |
+| POST    |	api/v2/messages          |    Send Email 	                       |
+| GET 	  | api/v2/messages          |   	Retrieve Received Emails           | 	
+| GET 	  | api/v2/messages          |    Retrieve A Specific Email          | 	
+| DELETE  |	api/v2/messages          |	   Delete A Specific Email             | 	
+| GET 	  | api/v2/message/sent      | 	  Retrieve Sent Emails               | 	
+| GET 	  | api/v2/message/unread    |	   Retrieve unRead Emails            |
+| POST    | api/v2/groups            |    Create groups                      |
+| GET     | api/v2/groups            |     Fetch all groups                  |
+| PATCH   | api/groups/:id/name      |    update group name                  |
+| DELETE  | api/groups/:id           |    delete a group                     |
+| POST    | api/groups/id/user       |    Add a ​user​ to a ​group​              |
+| DELETE  | groups/:groupid/users/:id|Delete a ​user​ from a specific ​group. |
+| POST    | groups/:id/message       | Create or send an ​email​ to a ​group     |
 
 ## Information on the API
 
        If you are running this app on from the hosted version, the following urls link:
-       https://arcane-shelf-53833.herokuapp.com/api/ 
+       https://epicmailapplicatio.herokuapp.com
           
 
        If you are running this app from your local computer, the following urls link:
-       http://localhost:5000 
+       http://localhost:4000 
  
    
 
@@ -141,3 +147,8 @@
     "method" : "DELETE"
     }
 }
+
+ 
+   @COPYRIGHT 
+      
+       Emmanuel Rukundo

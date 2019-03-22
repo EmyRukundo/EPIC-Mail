@@ -10,12 +10,12 @@ const {validateupdate,validate,validateMember,validateEmail} = groupValidate;
 
 router.get('/',verifyToken,getGroups);
 router.post('/',validate,verifyToken,createGroup);
-router.get('/:id',specificGroup);
-router.patch('/:id/name',validateupdate,updateGroup);
-router.delete('/:id',deleteGroup);
-router.post('/:id/user',validateMember,groupMember);
-router.delete('/:groupid/users/:id',deleteMember);
-router.post('/:id/message',validateEmail,emailGroup)
+router.get('/:id',verifyToken,specificGroup);
+router.patch('/:id/name',verifyToken,validateupdate,updateGroup);
+router.delete('/:id',verifyToken,deleteGroup);
+router.post('/:id/user',verifyToken,validateMember,groupMember);
+router.delete('/:groupid/users/:id',verifyToken,deleteMember);
+router.post('/:id/message',verifyToken,validateEmail,emailGroup)
 
 
 export default router;

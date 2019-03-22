@@ -64,20 +64,7 @@ const newGroup=[
 
   const specificGroup = (req, res) => {
 
-    let token = 0;
-    let decodedToken = '';
-    let userId = '';
-    if (req.headers.authorization) {
-      token = req.headers.authorization.split(' ')[1];
-      decodedToken = jsonWebToken.verify(token, 'secret');
-      userId = decodedToken.user[0].id;
-    } else {
-      return res.status(403).json({
-        status: 403,
-        error:"Login in your account first",
-      });
-    }
-
+   
 
     const sql = `SELECT * FROM group_table WHERE ownerid ='${userId}' `;
 
@@ -113,20 +100,7 @@ const newGroup=[
 
 const updateGroup = (req, res) => {
 
-  let token = 0;
-  let decodedToken = '';
-  let userId = '';
-  if (req.headers.authorization) {
-    token = req.headers.authorization.split(' ')[1];
-    decodedToken = jsonWebToken.verify(token, 'secret');
-    userId = decodedToken.user[0].id;
-  } else {
-    return res.status(403).json({
-      status: 403,
-      error:"Login in your account first",
-    });
-  }
-
+ 
 
     const checkGroupSql = `SELECT * FROM group_table WHERE ownerid='${userId}'`;
     const isAvailable = Database.executeQuery(checkGroupSql);
@@ -168,21 +142,7 @@ const updateGroup = (req, res) => {
 // @@DELETE GROUP
 
 const deleteGroup = async (req, res) => {
-  let token = 0;
-  let decodedToken = '';
-  let userId = '';
-  if (req.headers.authorization) {
-    token = req.headers.authorization.split(' ')[1];
-    decodedToken = jsonWebToken.verify(token, 'secret');
-    userId = decodedToken.user[0].id;
-  } else {
-    return res.status(403).json({
-      status: 403,
-      error:"Login in your account first",
-    });
-  }
-
-
+ 
     
       const tableAv = Database.executeQuery(`SELECT * FROM group_table WHERE id='${req.params.id}' and ownerid='${userId}' `);
 
@@ -204,20 +164,6 @@ const deleteGroup = async (req, res) => {
   //@@ ADD USER TO THE GROUP
 
 const groupMember = (req, res) => {
-
-  let token = 0;
-  let decodedToken = '';
-  let userId = '';
-  if (req.headers.authorization) {
-    token = req.headers.authorization.split(' ')[1];
-    decodedToken = jsonWebToken.verify(token, 'secret');
-    userId = decodedToken.user[0].id;
-  } else {
-    return res.status(403).json({
-      status: 403,
-      error:"Login in your account first",
-    });
-  }
 
 
   
@@ -264,20 +210,7 @@ const groupMember = (req, res) => {
 // @DELETE A MEMBER FROM A SPECIFIC GROUP
 
 const deleteMember = async (req, res) => {
-  let token = 0;
-  let decodedToken = '';
-  let userId = '';
-  if (req.headers.authorization) {
-    token = req.headers.authorization.split(' ')[1];
-    decodedToken = jsonWebToken.verify(token, 'secret');
-    userId = decodedToken.user[0].id;
-  } else {
-    return res.status(403).json({
-      status: 403,
-      error:"Login in your account first",
-    });
-  }
-
+  
 
 
   const memberSql = Database.executeQuery(`SELECT * FROM group_table WHERE ownerid='${userId}'and id='${req.params.groupid}'`);
@@ -303,21 +236,7 @@ const deleteMember = async (req, res) => {
 //@@ send email to the group
 
 const emailGroup = (req, res) => {
-  let token = 0;
-  let decodedToken = '';
-  let userId = '';
-  if (req.headers.authorization) {
-    token = req.headers.authorization.split(' ')[1];
-    decodedToken = jsonWebToken.verify(token, 'secret');
-    userId = decodedToken.user[0].id;
-  } else {
-    return res.status(403).json({
-      status: 403,
-      error:"Login in your account first",
-    });
-  }
-
-
+ 
   
   const memberSql = Database.executeQuery(`SELECT * FROM members_table WHERE userid='${userId}' and groupid='${req.params.id}'`);
 
