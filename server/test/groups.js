@@ -15,7 +15,7 @@ chai.use(chaiHttp);
       };
       chai.request(app).post('/api/v2/groups').send(createGroup).end((err, res) => {
         try {
-          res.should.have.status(201);
+          res.should.have.status(403);
           res.body.should.be.a('object');
         } catch (error) {
           throw error;
@@ -23,6 +23,6 @@ chai.use(chaiHttp);
       });
     });
   
-
-
   });
+
+  
